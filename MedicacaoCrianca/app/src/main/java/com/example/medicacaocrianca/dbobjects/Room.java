@@ -4,9 +4,9 @@ import java.util.List;
 
 public class Room {
 
-    Teacher teacher;
-    List<Children> list;
-    int number;
+    private Teacher teacher;
+    private List<Children> list;
+    private int number;
 
     public Room(Teacher teacher,List<Children> list, int number){
         this.teacher = teacher;

@@ -2,6 +2,7 @@ package com.example.medicacaocrianca;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,7 @@ public class AddChildrenActivity extends AppCompatActivity {
     private EditText parent;
     private EditText phoneNumber;
     private Button confirmBtn;
+    private Button backBtn;
     private DatabaseReference reference;
 
 
@@ -39,12 +41,25 @@ public class AddChildrenActivity extends AppCompatActivity {
         this.parent = findViewById(R.id.parent_text_id);
         this.phoneNumber = findViewById(R.id.number_text_id);
         this.confirmBtn = findViewById(R.id.save_btn_id);
+        this.backBtn = findViewById(R.id.back_btn_id);
         this.reference = FirebaseDatabase.getInstance().getReference().child("Children");
 
         this.confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addChildren(fullName.getText().toString(),address.getText().toString(), birthdate.getText().toString(), parent.getText().toString(), phoneNumber.getText().toString());
+                Toast.makeText(AddChildrenActivity.this,"Children added sucessfuly",Toast.LENGTH_SHORT).show();
+                Intent backHome = new Intent(AddChildrenActivity.this, AdminHomeActivity.class);
+                startActivity(backHome);
+
+            }
+        });
+
+        this.backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent backHome = new Intent(AddChildrenActivity.this, AdminHomeActivity.class);
+                startActivity(backHome);
             }
         });
 
