@@ -18,7 +18,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 
-
 public class MainActivity extends AppCompatActivity {
 
     private Button signIn;
@@ -43,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
                 Login();
             }
         });
-
     }
 
     private void Login() {

@@ -1,51 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingHorizontal="30dp"
     tools:context=".AdminHomeActivity">
-
-    <Button
-        android:id="@+id/logout_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:text="Sair "
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="93dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/text_add_room"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:text="Adiconar Criança"
-        android:textSize="36sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:paddingTop="30dp"
+        android:text="Add children"
+        android:textSize="36dp" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/save_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_save" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <EditText
+            android:id="@+id/full_name_text_id"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="Full name"
+            android:inputType="text"
+            android:paddingBottom="5dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <EditText
+            android:id="@+id/address_text_id"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="Address"
+            android:inputType="text"
+            android:paddingBottom="5dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <EditText
+            android:id="@+id/bithdate_text_id"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="BirthDate(ex.: 20/11/2016)"
+            android:inputType="text"
+            android:paddingBottom="5dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <EditText
+            android:id="@+id/parent_text_id"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="Responsible parent name"
+            android:inputType="text"
+            android:paddingBottom="5dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <EditText
+            android:id="@+id/number_text_id"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="PhoneNumber"
+            android:inputType="number"
+            android:paddingBottom="5dp" />
+    </RelativeLayout>
+
+
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+
+       <Button
+           android:id="@+id/back_btn_id"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentStart="true"
+           android:layout_marginTop="40dp"
+           android:layout_marginStart="30dp"
+           android:text="Back"/>
+
+       <Button
+           android:id="@+id/save_btn_id"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentEnd="true"
+           android:layout_marginEnd="30dp"
+           android:layout_marginTop="40dp"
+           android:text="Confirm"
+           app:srcCompat="@android:drawable/ic_menu_save" />
+
+   </RelativeLayout>
+
+
+
+</LinearLayout>
