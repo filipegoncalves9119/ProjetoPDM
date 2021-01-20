@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "461785846324",
+    "project_id": "medicacaocrianca",
+    "storage_bucket": "medicacaocrianca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:461785846324:android:e086586b3745797ca57061",
+        "android_client_info": {
+          "package_name": "com.example.medicacaocrianca"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "461785846324-doeiqum8e4bj67vlcdhkspl13ugr4bcl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXNQw8pWOaiwgHugSXT-7OQBuDKyuRwzw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "461785846324-doeiqum8e4bj67vlcdhkspl13ugr4bcl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
