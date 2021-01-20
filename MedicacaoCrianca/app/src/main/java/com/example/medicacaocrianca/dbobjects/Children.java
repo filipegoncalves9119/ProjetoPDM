@@ -1,4 +1,4 @@
-package com.example.medicacaocrianca.children;
+package com.example.medicacaocrianca.dbobjects;
 
 public class Children {
 
@@ -8,6 +8,14 @@ public class Children {
     private String phoneNumber;
     private String parent;
 
+    /**
+     * Class constructor
+     * @param fullName
+     * @param address
+     * @param birthDate
+     * @param phoneNumber
+     * @param parent
+     */
     public Children(String fullName, String address, String birthDate, String phoneNumber, String parent) {
         this.fullName = fullName;
         this.address = address;
@@ -16,14 +24,17 @@ public class Children {
         this.parent = parent;
     }
 
+    /**
+     * Class Constructor
+     */
     public Children(){
 
     }
 
-    public String getFullName() {
-        return fullName;
-    }
 
+    //Getters and setters
+    public String getFullName() { return fullName;
+    }
     public String getAddress() {
         return address;
     }

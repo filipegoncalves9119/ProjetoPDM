@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.medicacaocrianca.children.Children;
+import com.example.medicacaocrianca.dbobjects.Children;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -22,6 +22,12 @@ public class AddChildrenActivity extends AppCompatActivity {
     private Button confirmBtn;
     private DatabaseReference reference;
 
+
+    /**
+     * onCreate method
+     * used to call allChildren method
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +50,15 @@ public class AddChildrenActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Method to add children to the real time firebase
+     * sends the given information trough the text areas
+     * @param name
+     * @param address
+     * @param birthdate
+     * @param parent
+     * @param phone
+     */
     private void addChildren(String name, String address, String birthdate, String parent, String phone) {
         Children children = new Children(name, address, birthdate, parent, phone);
         this.reference.push().setValue(children);

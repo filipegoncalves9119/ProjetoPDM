@@ -26,6 +26,11 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
 
 
+    /**
+     *  onCreate method
+     *  used to call login method
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +49,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Method to log in
+     * This method uses email and password authentication through firebase data
+     * Depending on which e-mail is used to sign in it redirects to different activities
+     */
     private void Login() {
         String email = this.email.getText().toString();
         String password = this.password.getText().toString();
