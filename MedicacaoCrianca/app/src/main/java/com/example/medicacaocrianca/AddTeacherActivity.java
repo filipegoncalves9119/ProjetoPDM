@@ -85,6 +85,7 @@ public class AddTeacherActivity extends AppCompatActivity {
             return;
         }
         else if(!pass.equals(passConfirm)){
+            this.password.setError("Password doesn't match");
             this.passwordConfirm.setError("Password doesn't match");
             return;
         }

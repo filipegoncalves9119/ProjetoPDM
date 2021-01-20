@@ -6,12 +6,12 @@ public class Room {
 
     private Teacher teacher;
     private List<Children> list;
-    private int number;
+    private int roomNumber;
 
-    public Room(Teacher teacher,List<Children> list, int number){
+    public Room(Teacher teacher,List<Children> list, int roomNumber){
         this.teacher = teacher;
         this.list = list;
-        this.number = number;
+        this.roomNumber = roomNumber;
     }
 
     public Room(){
@@ -35,10 +35,10 @@ public class Room {
     }
 
     public int getNumber() {
-        return number;
+        return roomNumber;
     }
 
     public void setNumber(int number) {
-        this.number = number;
+        this.roomNumber = number;
     }
 }
