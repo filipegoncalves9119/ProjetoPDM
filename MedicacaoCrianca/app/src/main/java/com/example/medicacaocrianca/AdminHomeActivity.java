@@ -9,20 +9,42 @@ import android.widget.Button;
 
 public class AdminHomeActivity extends AppCompatActivity {
 
-    Button btn;
+    Button btnAddChildren;
+    Button btnAddRoom;
+    Button btnAddTeacher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_home);
-        btn = findViewById(R.id.addRoom_btn_id);
+        btnAddChildren = findViewById(R.id.addChildren_btn_id);
+        btnAddRoom = findViewById(R.id.addRoom_btn_id);
+        btnAddTeacher = findViewById(R.id.addChildren_btn_id);
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        btnAddChildren.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AdminHomeActivity.this, AddChildrenActivity.class);
-                AdminHomeActivity.this.startActivity(intent);
+                Intent intentAddChildren = new Intent(AdminHomeActivity.this, AddChildrenActivity.class);
+                AdminHomeActivity.this.startActivity(intentAddChildren);
             }
         });
+
+        btnAddRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentAddRoom = new Intent(AdminHomeActivity.this, AddRoomActivity.class);
+                AdminHomeActivity.this.startActivity(intentAddRoom);
+            }
+        });
+
+        btnAddTeacher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentAddTeacher = new Intent(AdminHomeActivity.this, AddTeacherActivity.class);
+                AdminHomeActivity.this.startActivity(intentAddTeacher);
+            }
+        });
+
+
     }
 }

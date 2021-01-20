@@ -9,25 +9,12 @@
     tools:context=".AdminHomeActivity">
 
     <TextView
-        android:id="@+id/text_add_room"
+        android:id="@+id/text_add_teacher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="30dp"
-        android:text="Add Room"
+        android:text="Add Teacher"
         android:textSize="36dp" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp">
-
-        <EditText
-            android:id="@+id/room_number_text_id"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:hint="Room Number"
-            android:inputType="text"
-            android:paddingBottom="5dp" />
-    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -38,6 +25,19 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:hint="Teacher Name"
+            android:inputType="text"
+            android:paddingBottom="5dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <EditText
+            android:id="@+id/teacher_email_text_id"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="Teacher Email"
             android:inputType="text"
             android:paddingBottom="5dp" />
     </RelativeLayout>

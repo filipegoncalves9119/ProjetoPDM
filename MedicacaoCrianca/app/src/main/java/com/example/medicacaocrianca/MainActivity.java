@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         this.signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Login();
+                login();
             }
         });
     }
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
      * This method uses email and password authentication through firebase data
      * Depending on which e-mail is used to sign in it redirects to different activities
      */
-    private void Login() {
+    private void login() {
         String email = this.email.getText().toString();
         String password = this.password.getText().toString();
 
