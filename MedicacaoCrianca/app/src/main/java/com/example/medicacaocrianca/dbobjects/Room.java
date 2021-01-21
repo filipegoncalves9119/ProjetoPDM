@@ -4,11 +4,11 @@ import java.util.List;
 
 public class Room {
 
-    private Teacher teacher;
+    private String teacher;
     private List<Children> list;
     private int roomNumber;
 
-    public Room(Teacher teacher,List<Children> list, int roomNumber){
+    public Room(String teacher,List<Children> list, int roomNumber){
         this.teacher = teacher;
         this.list = list;
         this.roomNumber = roomNumber;
@@ -18,11 +18,11 @@ public class Room {
 
     }
 
-    public Teacher getTeacher() {
+    public String getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(Teacher teacher) {
+    public void setTeacher(String teacher) {
         this.teacher = teacher;
     }
 
