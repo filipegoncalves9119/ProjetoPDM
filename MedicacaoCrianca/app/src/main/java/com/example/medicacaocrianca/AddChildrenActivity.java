@@ -1,12 +1,21 @@
 package com.example.medicacaocrianca;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.medicacaocrianca.dbobjects.Children;
@@ -22,7 +31,10 @@ public class AddChildrenActivity extends AppCompatActivity {
     private EditText phoneNumber;
     private Button confirmBtn;
     private Button backBtn;
+    private Button takePicture;
+    private ImageView picture;
     private DatabaseReference reference;
+    private final int REQUEST_CAMERA_CODE = 100;
 
 
     /**
@@ -42,7 +54,29 @@ public class AddChildrenActivity extends AppCompatActivity {
         this.phoneNumber = findViewById(R.id.number_text_id);
         this.confirmBtn = findViewById(R.id.save_btn_id);
         this.backBtn = findViewById(R.id.back_btn_id);
+        this.takePicture = findViewById(R.id.picture_btn_id);
+        this.picture = findViewById(R.id.image_id);
         this.reference = FirebaseDatabase.getInstance().getReference().child("Children");
+
+
+        //Camera request
+        if(ContextCompat.checkSelfPermission(AddChildrenActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(AddChildrenActivity.this, new String[]{
+                    Manifest.permission.CAMERA
+            },REQUEST_CAMERA_CODE);
+        }
+
+        this.takePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent takePic = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(takePic, REQUEST_CAMERA_CODE);
+
+            }
+        });
+
+
+
 
         this.confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +97,16 @@ public class AddChildrenActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CAMERA_CODE){
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            this.picture.setImageBitmap(bitmap);
+        }
     }
 
     /**

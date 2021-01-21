@@ -28,8 +28,7 @@ import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.List;
 
-public class AddRoomActivity extends AppCompatActivity implements  AdapterView.OnItemSelectedListener {
-
+public class AddRoomActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Button backBtn;
     private Button saveBtn;
@@ -39,7 +38,7 @@ public class AddRoomActivity extends AppCompatActivity implements  AdapterView.O
     DatabaseReference reference;
     DatabaseReference referenceToRoom ;
 
-    private FirebaseAuth firebase;
+    FirebaseAuth firebase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +78,9 @@ public class AddRoomActivity extends AppCompatActivity implements  AdapterView.O
         };
         reference.addListenerForSingleValueEvent(valueEventListener);
 
+        /**
+         * Calls on register method
+         */
         this.saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +90,10 @@ public class AddRoomActivity extends AppCompatActivity implements  AdapterView.O
 
     }
 
+    /**
+     * method to Regist an object of Room into database
+     * gather all information from edit text and spinner selection and pushes into database
+     */
     private void register() {
         List<Children> list = new ArrayList<>();
         //list.add(new Children());
@@ -98,12 +104,23 @@ public class AddRoomActivity extends AppCompatActivity implements  AdapterView.O
 
     }
 
+    /**
+     *
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        this.getNumber = position;
+
 
     }
 
+    /**
+     *
+     * @param parent
+     */
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 

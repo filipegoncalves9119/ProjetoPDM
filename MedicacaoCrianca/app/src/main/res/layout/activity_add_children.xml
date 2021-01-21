@@ -82,6 +82,30 @@
             android:paddingBottom="5dp" />
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/layouta"
+        android:layout_width="match_parent"
+        android:layout_height="120dp">
+
+        <Button
+            android:id="@+id/picture_btn_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignParentLeft="true"
+            android:text="Take picture">
+
+        </Button>
+       <ImageView
+           android:id="@+id/image_id"
+           android:layout_width="100dp"
+           android:layout_height="match_parent"
+           android:layout_alignParentRight="true"
+           android:background="@drawable/rectangle_field">
+
+
+       </ImageView>
+    </RelativeLayout>
 
 
    <RelativeLayout
