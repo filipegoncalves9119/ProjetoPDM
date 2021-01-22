@@ -103,7 +103,7 @@ public class AddTeacherActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     register();
-                    Toast.makeText(AddTeacherActivity.this, "Teacher created succefuly", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddTeacherActivity.this, "Teacher created successfully", Toast.LENGTH_SHORT).show();
                     Intent confirm = new Intent(AddTeacherActivity.this, AdminHomeActivity.class);
                     startActivity(confirm);
                 }

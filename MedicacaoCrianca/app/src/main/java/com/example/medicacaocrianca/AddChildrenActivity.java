@@ -32,9 +32,11 @@ public class AddChildrenActivity extends AppCompatActivity {
     private Button confirmBtn;
     private Button backBtn;
     private Button takePicture;
+    private Button openGallery;
     private ImageView picture;
     private DatabaseReference reference;
-    private final int REQUEST_CAMERA_CODE = 100;
+    private static final int REQUEST_CAMERA_CODE = 100;
+    private static final int REQUEST_GALLERY_CODE = 200;
 
 
     /**
@@ -56,6 +58,7 @@ public class AddChildrenActivity extends AppCompatActivity {
         this.backBtn = findViewById(R.id.back_btn_id);
         this.takePicture = findViewById(R.id.picture_btn_id);
         this.picture = findViewById(R.id.image_id);
+        this.openGallery = findViewById(R.id.gallery_btn_id);
         this.reference = FirebaseDatabase.getInstance().getReference().child("Children");
 
 
@@ -63,6 +66,11 @@ public class AddChildrenActivity extends AppCompatActivity {
         if(ContextCompat.checkSelfPermission(AddChildrenActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(AddChildrenActivity.this, new String[]{
                     Manifest.permission.CAMERA
+            },REQUEST_CAMERA_CODE);
+        }
+        if(ContextCompat.checkSelfPermission(AddChildrenActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(AddChildrenActivity.this, new String[]{
+                    Manifest.permission.READ_EXTERNAL_STORAGE
             },REQUEST_CAMERA_CODE);
         }
 
@@ -74,7 +82,6 @@ public class AddChildrenActivity extends AppCompatActivity {
 
             }
         });
-
 
 
 
@@ -97,9 +104,34 @@ public class AddChildrenActivity extends AppCompatActivity {
             }
         });
 
+        this.openGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pickImageFromGallery();
+            }
+        });
 
     }
 
+
+    /**
+     * Method to start the gallery pick activity
+     */
+    private void pickImageFromGallery() {
+
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, REQUEST_GALLERY_CODE);
+    }
+
+    /**
+     * Method used to place the taken picture into the imageview
+     * Or choose between any photo in the phone's gallery
+     * if the request code matches
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -107,7 +139,13 @@ public class AddChildrenActivity extends AppCompatActivity {
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             this.picture.setImageBitmap(bitmap);
         }
+
+        if(requestCode == REQUEST_GALLERY_CODE){
+            this.picture.setImageURI(data.getData());
+        }
     }
+
+
 
     /**
      * Method to add children to the real time firebase
@@ -121,6 +159,6 @@ public class AddChildrenActivity extends AppCompatActivity {
     private void addChildren(String name, String address, String birthdate, String parent, String phone) {
         Children children = new Children(name, address, birthdate, parent, phone);
         this.reference.push().setValue(children);
-        Toast.makeText(AddChildrenActivity.this,"Children added sucefully!", Toast.LENGTH_LONG).show();
+        Toast.makeText(AddChildrenActivity.this,"Children added successfully!", Toast.LENGTH_LONG).show();
     }
 }

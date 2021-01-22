@@ -14,6 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="30dp"
+        android:paddingBottom="40dp"
         android:text="Add children"
         android:textSize="36dp" />
 
@@ -93,7 +94,16 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
             android:text="Take picture">
+
+        </Button>
+        <Button
+            android:id="@+id/gallery_btn_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="Select from gallery">
 
         </Button>
        <ImageView
