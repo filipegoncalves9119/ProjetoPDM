@@ -44,7 +44,9 @@ public class MainActivity extends AppCompatActivity {
         this.signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login();
+               // login();
+                Intent intent = new Intent(MainActivity.this, AdminHomeActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -66,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
             this.password.setError("Enter your password");
             return;
         }
+
+
         firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {

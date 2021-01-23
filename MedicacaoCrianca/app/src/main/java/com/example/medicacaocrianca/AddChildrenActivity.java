@@ -10,8 +10,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +23,8 @@ import android.widget.Toast;
 import com.example.medicacaocrianca.dbobjects.Children;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Objects;
 
 public class AddChildrenActivity extends AppCompatActivity {
 
@@ -42,6 +46,7 @@ public class AddChildrenActivity extends AppCompatActivity {
     /**
      * onCreate method
      * used to call allChildren method
+     *
      * @param savedInstanceState
      */
     @Override
@@ -63,15 +68,16 @@ public class AddChildrenActivity extends AppCompatActivity {
 
 
         //Camera request
-        if(ContextCompat.checkSelfPermission(AddChildrenActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+        if (ContextCompat.checkSelfPermission(AddChildrenActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(AddChildrenActivity.this, new String[]{
                     Manifest.permission.CAMERA
-            },REQUEST_CAMERA_CODE);
+            }, REQUEST_CAMERA_CODE);
         }
-        if(ContextCompat.checkSelfPermission(AddChildrenActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+        //Gallery request
+        if (ContextCompat.checkSelfPermission(AddChildrenActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(AddChildrenActivity.this, new String[]{
                     Manifest.permission.READ_EXTERNAL_STORAGE
-            },REQUEST_CAMERA_CODE);
+            }, REQUEST_CAMERA_CODE);
         }
 
         this.takePicture.setOnClickListener(new View.OnClickListener() {
@@ -84,14 +90,10 @@ public class AddChildrenActivity extends AppCompatActivity {
         });
 
 
-
         this.confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addChildren(fullName.getText().toString(),address.getText().toString(), birthdate.getText().toString(), parent.getText().toString(), phoneNumber.getText().toString());
-                Toast.makeText(AddChildrenActivity.this,"Children added sucessfuly",Toast.LENGTH_SHORT).show();
-                Intent backHome = new Intent(AddChildrenActivity.this, AdminHomeActivity.class);
-                startActivity(backHome);
+                register(fullName.getText().toString(), address.getText().toString(), birthdate.getText().toString(), parent.getText().toString(), phoneNumber.getText().toString(), picture);
 
             }
         });
@@ -115,6 +117,61 @@ public class AddChildrenActivity extends AppCompatActivity {
 
 
     /**
+     * Method to add children to the real time firebase
+     * sends the given information trough the text areas
+     *
+     * @param name
+     * @param address
+     * @param birthdate
+     * @param parent
+     * @param phone
+     */
+    private void addChildren(String name, String address, String birthdate, String parent, String phone) {
+
+        if (!name.equals("") && !address.equals("") && !birthdate.equals("") && !parent.equals("") && !phone.equals("")) {
+            Children children = new Children(name, address, birthdate, parent, phone);
+            this.reference.push().setValue(children);
+        }
+    }
+
+
+    /**
+     * Method to check if the text areas are filled
+     * if all filled, calls for method to add the data to the database
+     * calls for home activity
+     * @param name
+     * @param address
+     * @param birthdate
+     * @param parent
+     * @param phone
+     * @param imageView
+     */
+    private void register(String name, String address, String birthdate, String parent, String phone, ImageView imageView) {
+        if (TextUtils.isEmpty(name)) {
+            this.fullName.setError("Enter a name");
+        } else if (TextUtils.isEmpty(address)) {
+            this.address.setError("Enter an address");
+        } else if (TextUtils.isEmpty(birthdate)) {
+            this.birthdate.setError("Enter a birth date");
+        } else if (TextUtils.isEmpty(parent)) {
+            this.parent.setError("Enter the responsible parent");
+        } else if (TextUtils.isEmpty(phone)) {
+            this.phoneNumber.setError("Enter phone number");
+        }
+
+
+        if (!name.equals("") && !address.equals("") && !birthdate.equals("") && !parent.equals("") && !phone.equals("") && imageView.getDrawable() != null) {
+
+            addChildren(name, address, birthdate, parent, phone);
+            Toast.makeText(AddChildrenActivity.this, "Children added sucessfuly", Toast.LENGTH_SHORT).show();
+            Intent backHome = new Intent(AddChildrenActivity.this, AdminHomeActivity.class);
+            startActivity(backHome);
+
+        }
+    }
+
+
+    /**
      * Method to start the gallery pick activity
      */
     private void pickImageFromGallery() {
@@ -128,6 +185,7 @@ public class AddChildrenActivity extends AppCompatActivity {
      * Method used to place the taken picture into the imageview
      * Or choose between any photo in the phone's gallery
      * if the request code matches
+     *
      * @param requestCode
      * @param resultCode
      * @param data
@@ -135,30 +193,17 @@ public class AddChildrenActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_CAMERA_CODE){
+        if (requestCode == REQUEST_CAMERA_CODE) {
+
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             this.picture.setImageBitmap(bitmap);
         }
 
-        if(requestCode == REQUEST_GALLERY_CODE){
+        if (requestCode == REQUEST_GALLERY_CODE) {
             this.picture.setImageURI(data.getData());
         }
     }
 
 
 
-    /**
-     * Method to add children to the real time firebase
-     * sends the given information trough the text areas
-     * @param name
-     * @param address
-     * @param birthdate
-     * @param parent
-     * @param phone
-     */
-    private void addChildren(String name, String address, String birthdate, String parent, String phone) {
-        Children children = new Children(name, address, birthdate, parent, phone);
-        this.reference.push().setValue(children);
-        Toast.makeText(AddChildrenActivity.this,"Children added successfully!", Toast.LENGTH_LONG).show();
-    }
 }
