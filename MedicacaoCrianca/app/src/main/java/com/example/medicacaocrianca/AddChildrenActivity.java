@@ -1,5 +1,6 @@
 package com.example.medicacaocrianca;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -10,6 +11,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -21,9 +23,15 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.medicacaocrianca.dbobjects.Children;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Objects;
 
 public class AddChildrenActivity extends AppCompatActivity {
@@ -41,6 +49,9 @@ public class AddChildrenActivity extends AppCompatActivity {
     private DatabaseReference reference;
     private static final int REQUEST_CAMERA_CODE = 100;
     private static final int REQUEST_GALLERY_CODE = 200;
+    // Create a storage reference from our app
+
+
 
 
     /**
@@ -65,6 +76,9 @@ public class AddChildrenActivity extends AppCompatActivity {
         this.picture = findViewById(R.id.image_id);
         this.openGallery = findViewById(R.id.gallery_btn_id);
         this.reference = FirebaseDatabase.getInstance().getReference().child("Children");
+        // Create a storage reference from our app
+
+
 
 
         //Camera request
@@ -88,7 +102,6 @@ public class AddChildrenActivity extends AppCompatActivity {
 
             }
         });
-
 
         this.confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,7 +179,7 @@ public class AddChildrenActivity extends AppCompatActivity {
             Toast.makeText(AddChildrenActivity.this, "Children added sucessfuly", Toast.LENGTH_SHORT).show();
             Intent backHome = new Intent(AddChildrenActivity.this, AdminHomeActivity.class);
             startActivity(backHome);
-
+            uploadPicture();
         }
     }
 
@@ -204,6 +217,41 @@ public class AddChildrenActivity extends AppCompatActivity {
         }
     }
 
+
+    /**
+     * Method to upload picture to Storage firebase
+     * using Storage reference stores a picture
+     * converts an image to an array of bytes
+     */
+    private void uploadPicture(){
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference databaseReference = storage.getReference();
+        StorageReference storageReference = databaseReference.child("images/" +this.fullName.getText().toString() +".jpg");
+
+        // Get the data from an ImageView as bytes
+        picture.setDrawingCacheEnabled(true);
+        picture.buildDrawingCache();
+        Bitmap bitmap = ((BitmapDrawable) picture.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = storageReference.putBytes(data);
+
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+            }
+        });
+
+
+    }
 
 
 }

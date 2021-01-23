@@ -44,9 +44,9 @@ public class MainActivity extends AppCompatActivity {
         this.signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // login();
-                Intent intent = new Intent(MainActivity.this, AdminHomeActivity.class);
-                startActivity(intent);
+                login();
+               // Intent intent = new Intent(MainActivity.this, AdminHomeActivity.class);
+                //startActivity(intent);
             }
         });
     }
