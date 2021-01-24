@@ -16,11 +16,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.EventListener;
+
 public class TeacherHomeActivity extends AppCompatActivity {
 
     private TextView teacherName;
+    private TextView roomNumber;
     private FirebaseUser user;
     private DatabaseReference database;
+    private String saveName;
 
 
     @Override
@@ -28,17 +32,42 @@ public class TeacherHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_home);
 
+        this.roomNumber = findViewById(R.id.text_view_room_n_id);
         this.teacherName = findViewById(R.id.nome_id);
+
+
         this.user = FirebaseAuth.getInstance().getCurrentUser();
         this.database = FirebaseDatabase.getInstance().getReference();
 
+
+
+
         setTeacherName();
+        setRoomNumber();
     }
 
+
+
+
+
+
+
+
+
+
+    /**
+     * Method to return e-mail
+     * @return authenticated email user
+     */
     private String getUserEmail(){
         return this.user.getEmail();
 
     }
+
+    /**
+     * Method to query the database on Teacher collection and search for the email used on the authentication
+     * gets the children name according and sets it to the textView
+     */
     private void setTeacherName(){
         Query query = database.child("Teacher").orderByChild("email").equalTo(getUserEmail());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -47,6 +76,7 @@ public class TeacherHomeActivity extends AppCompatActivity {
                 for (DataSnapshot data : snapshot.getChildren()){
                     String name = data.child("name").getValue().toString();
                     teacherName.setText(name);
+                    saveName = name;
                 }
             }
 
@@ -57,6 +87,24 @@ public class TeacherHomeActivity extends AppCompatActivity {
         });
     }
 
+    private void setRoomNumber(){
+
+        Query query = database.child("Room").orderByChild("teacher").equalTo("Vitao machine");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot data : snapshot.getChildren()){
+                    String number = data.child("number").getValue().toString();
+                    roomNumber.setText(number);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
 
 }
