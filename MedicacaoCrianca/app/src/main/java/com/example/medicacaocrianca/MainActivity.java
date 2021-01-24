@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                     }else {
                         Toast.makeText(MainActivity.this,"Sucefully logged in",Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(MainActivity.this, AddRoomActivity.class);
+                        Intent intent = new Intent(MainActivity.this, TeacherHomeActivity.class);
                         startActivity(intent);
                     }
                 }else{
