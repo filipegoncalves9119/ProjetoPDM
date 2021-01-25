@@ -18,11 +18,12 @@
 
     <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="60dp">
+    android:layout_height="60dp"
+        android:layout_marginTop="100dp">
     <Button
         android:id="@+id/addChildren_btn_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
         android:layout_centerHorizontal="true"
 
         android:text="Add Children"/>
@@ -35,23 +36,37 @@
 
         <Button
             android:id="@+id/addTeacher_btn_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
             android:layout_centerHorizontal="true"
             android:text="Add Teacher" />
     </RelativeLayout>
+
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="60dp">
+
     <Button
         android:id="@+id/addRoom_btn_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
         android:layout_centerHorizontal="true"
         android:text="Add Room"/>
 </RelativeLayout>
 
 
+    <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
+
+    <Button
+        android:id="@+id/addChildren_to_room_btn_id"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+
+        android:text="Add Children to room" />
+</RelativeLayout>
 
 
 

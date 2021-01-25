@@ -46,7 +46,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="50dp">
 
         <TextView
         android:layout_width="60dp"
@@ -60,11 +60,19 @@
             android:layout_centerHorizontal="true"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:text="n"
+            android:text=""
             android:gravity="center"/>
 
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </RelativeLayout>
 
 

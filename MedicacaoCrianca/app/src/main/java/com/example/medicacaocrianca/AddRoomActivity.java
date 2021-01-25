@@ -37,7 +37,7 @@ public class AddRoomActivity extends AppCompatActivity implements AdapterView.On
     private EditText roomNumber;
     private Spinner spin;
     DatabaseReference reference;
-    DatabaseReference referenceToRoom ;
+    DatabaseReference referenceToRoom;
 
     FirebaseAuth firebase;
 
@@ -61,8 +61,8 @@ public class AddRoomActivity extends AppCompatActivity implements AdapterView.On
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<String> list = new ArrayList<>();
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    String names = ds.child("name").getValue().toString();
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    String names = data.child("name").getValue().toString();
                     list.add(names);
                 }
 

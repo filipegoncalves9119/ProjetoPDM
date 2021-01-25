@@ -9,9 +9,10 @@ import android.widget.Button;
 
 public class AdminHomeActivity extends AppCompatActivity {
 
-    Button btnAddChildren;
-    Button btnAddRoom;
-    Button btnAddTeacher;
+    private Button btnAddChildren;
+    private Button btnAddRoom;
+    private Button btnAddTeacher;
+    private Button btnAddChildRoom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +21,7 @@ public class AdminHomeActivity extends AppCompatActivity {
         btnAddChildren = findViewById(R.id.addChildren_btn_id);
         btnAddRoom = findViewById(R.id.addRoom_btn_id);
         btnAddTeacher = findViewById(R.id.addTeacher_btn_id);
+        btnAddChildRoom = findViewById(R.id.addChildren_to_room_btn_id);
 
         btnAddChildren.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +47,13 @@ public class AdminHomeActivity extends AppCompatActivity {
             }
         });
 
+        btnAddChildRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentAddChildRoom = new Intent(AdminHomeActivity.this, AddChildRoom.class);
+                startActivity(intentAddChildRoom);
+            }
+        });
 
     }
 }
