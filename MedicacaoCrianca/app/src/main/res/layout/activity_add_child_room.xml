@@ -23,7 +23,7 @@
         <TextView
             android:id="@+id/textView_name_id"
             android:layout_width="match_parent"
-            android:background="@color/white"
+            android:background="@color/card_color"
             android:textColor="@color/black"
             android:layout_height="40dp"
             android:text="@string/pickChildren"/>
@@ -42,7 +42,7 @@
         <TextView
             android:id="@+id/textView_room_id"
             android:layout_width="match_parent"
-            android:background="@color/white"
+            android:background="@color/card_color"
             android:textColor="@color/black"
             android:layout_height="40dp"
             android:layout_alignBottom="@+id/spinner_room_id"
