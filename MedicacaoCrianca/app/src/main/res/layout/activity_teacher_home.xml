@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
-    tools:context=".TeacherHomeActivity">
+    android:background="#17A9BC"
+    tools:context=".activity.TeacherHomeActivity">
 
 
 
@@ -20,20 +20,22 @@
             android:id="@+id/wellcome_id"
             android:layout_width="100dp"
             android:layout_height="60dp"
+            android:textColor="#ffffff"
             android:layout_alignParentTop="true"
             android:layout_marginTop="0dp"
             android:layout_marginEnd="1dp"
             android:layout_toStartOf="@+id/nome_id"
             android:gravity="center"
-            android:text="Wellcome," />
+            android:text="Wellcome,"/>
 
         <TextView
             android:id="@+id/nome_id"
             android:layout_width="150dp"
             android:layout_height="60dp"
+            android:textColor="#ffffff"
             android:layout_alignParentEnd="true"
             android:gravity="center"
-            android:text="" />
+            android:text=""/>
 
     </RelativeLayout>
     <TextView
@@ -41,7 +43,7 @@
         android:layout_height="100dp"
         android:gravity="center"
         android:text="Teacher Home"
-
+        android:textColor="#ffffff"
         android:textSize="36dp"/>
 
     <RelativeLayout
@@ -54,13 +56,16 @@
         android:layout_marginStart="115dp"
 
         android:gravity="center"
-        android:text="Room: " />
+        android:text="Room: "
+        android:textColor="#ffffff"/>
+
         <TextView
             android:id="@+id/text_view_room_n_id"
             android:layout_centerHorizontal="true"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:text=""
+            android:textColor="#ffffff"
             android:gravity="center"/>
 
     </RelativeLayout>
@@ -71,8 +76,10 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tools:listitem="@layout/children_list_item" />
     </RelativeLayout>
 
 

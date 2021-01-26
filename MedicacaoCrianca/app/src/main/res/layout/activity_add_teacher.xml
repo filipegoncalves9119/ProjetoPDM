@@ -6,13 +6,15 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".AdminHomeActivity">
+    android:background="#17A9BC"
+    tools:context=".activity.AdminHomeActivity">
 
     <TextView
         android:id="@+id/text_add_teacher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="30dp"
+        android:textColor="@color/white"
         android:text="Add Teacher"
         android:textSize="36dp" />
 
@@ -24,6 +26,8 @@
             android:id="@+id/teacher_name_text_id"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:background="@color/white"
+            android:textColor="@color/black"
             android:hint="Full name"
             android:inputType="text"
             android:paddingBottom="5dp" />
@@ -37,6 +41,8 @@
             android:id="@+id/teacher_email_text_id"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:background="@color/white"
+            android:textColor="@color/black"
             android:hint="Email"
             android:inputType="textEmailAddress"
             android:paddingBottom="5dp" />
@@ -50,6 +56,8 @@
             android:id="@+id/teacher_password_text_id"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:background="@color/white"
+            android:textColor="@color/black"
             android:hint="password"
             android:inputType="textPassword"
             android:paddingBottom="5dp" />
@@ -62,6 +70,8 @@
         <EditText
             android:id="@+id/teacher_password_confirm_text_id"
             android:layout_width="match_parent"
+            android:background="@color/white"
+            android:textColor="@color/black"
             android:layout_height="60dp"
             android:hint="password"
             android:inputType="textPassword"

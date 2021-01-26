@@ -1,4 +1,4 @@
-package com.example.medicacaocrianca.dbobjects;
+package com.example.medicacaocrianca.model;
 
 public class Children {
 
@@ -22,6 +22,10 @@ public class Children {
         this.birthDate = birthDate;
         this.phoneNumber = phoneNumber;
         this.parent = parent;
+    }
+
+    public Children(String fullName){
+        this.fullName = fullName;
     }
 
     /**

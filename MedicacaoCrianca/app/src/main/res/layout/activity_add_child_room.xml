@@ -7,12 +7,14 @@
     android:gravity="center"
     android:orientation="vertical"
     android:paddingHorizontal="30dp"
-    tools:context=".AdminHomeActivity">
+    android:background="#17A9BC"
+    tools:context=".activity.AdminHomeActivity">
 
 <TextView
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:text="Assign a children to a room"
+    android:textColor="#ffffff"
     android:textSize="36dp"
     />
     <RelativeLayout
@@ -21,6 +23,8 @@
         <TextView
             android:id="@+id/textView_name_id"
             android:layout_width="match_parent"
+            android:background="@color/white"
+            android:textColor="@color/black"
             android:layout_height="40dp"
             android:text="Pick a children"/>
     <Spinner
@@ -38,6 +42,8 @@
         <TextView
             android:id="@+id/textView_room_id"
             android:layout_width="match_parent"
+            android:background="@color/white"
+            android:textColor="@color/black"
             android:layout_height="40dp"
             android:layout_alignBottom="@+id/spinner_room_id"
             android:text="Pick a room"/>

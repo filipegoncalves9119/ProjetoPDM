@@ -6,13 +6,15 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
+    android:background="#17A9BC"
     android:paddingHorizontal="30dp"
-    tools:context=".AdminHomeActivity">
+    tools:context=".activity.AdminHomeActivity">
 
     <TextView
         android:id="@+id/text_adminArea"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#ffffff"
         android:text="Administrator Area"
         android:textSize="36sp" />
 

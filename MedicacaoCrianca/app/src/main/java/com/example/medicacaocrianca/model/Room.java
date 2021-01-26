@@ -1,4 +1,4 @@
-package com.example.medicacaocrianca.dbobjects;
+package com.example.medicacaocrianca.model;
 
 import java.util.List;
 
@@ -8,15 +8,16 @@ public class Room {
     private List<Children> list;
     private int roomNumber;
 
-    public Room(String teacher,List<Children> list, int roomNumber){
+    public Room(String teacher, List<Children> list, int roomNumber) {
         this.teacher = teacher;
         this.list = list;
         this.roomNumber = roomNumber;
     }
 
-    public Room(){
+    public Room() {
 
     }
+
 
     public String getTeacher() {
         return teacher;

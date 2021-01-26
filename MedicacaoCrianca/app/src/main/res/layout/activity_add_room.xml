@@ -6,13 +6,15 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".AdminHomeActivity">
+    android:background="#17A9BC"
+    tools:context=".activity.AdminHomeActivity">
 
     <TextView
         android:id="@+id/text_add_room"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="30dp"
+        android:textColor="#ffffff"
         android:text="Add Room"
         android:textSize="36dp" />
 
@@ -24,6 +26,8 @@
             android:id="@+id/room_number_text_id"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:background="@color/white"
+            android:textColor="@color/black"
             android:hint="Room Number"
             android:inputType="number"
             android:paddingBottom="5dp" />
@@ -31,7 +35,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:textColor="@color/black">
 
         <Spinner
             android:layout_width="match_parent"

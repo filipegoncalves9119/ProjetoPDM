@@ -1,4 +1,4 @@
-package com.example.medicacaocrianca;
+package com.example.medicacaocrianca.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,15 +12,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.medicacaocrianca.dbobjects.Teacher;
+import com.example.medicacaocrianca.R;
+import com.example.medicacaocrianca.model.Teacher;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.nio.charset.Charset;
 
 public class AddTeacherActivity extends AppCompatActivity {
 
@@ -72,6 +71,9 @@ public class AddTeacherActivity extends AppCompatActivity {
         String passConfirm = passwordConfirm.getText().toString();
         String name = fullName.getText().toString();
 
+
+
+
         if(TextUtils.isEmpty(mail)){
             this.email.setError("Enter your e-mail");
             return;
@@ -118,6 +120,7 @@ public class AddTeacherActivity extends AppCompatActivity {
     private void register(){
         Teacher teacher = new Teacher(this.fullName.getText().toString(), this.email.getText().toString(), this.password.getText().toString());
         reference.push().setValue(teacher);
+
 
     }
 }

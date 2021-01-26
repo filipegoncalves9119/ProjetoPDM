@@ -1,4 +1,4 @@
-package com.example.medicacaocrianca;
+package com.example.medicacaocrianca.activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -7,12 +7,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -22,7 +20,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.medicacaocrianca.dbobjects.Children;
+import com.example.medicacaocrianca.R;
+import com.example.medicacaocrianca.model.Children;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -32,7 +31,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.util.Objects;
 
 public class AddChildrenActivity extends AppCompatActivity {
 

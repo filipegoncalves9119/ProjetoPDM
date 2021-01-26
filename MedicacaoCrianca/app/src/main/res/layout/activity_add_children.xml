@@ -7,7 +7,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:paddingHorizontal="30dp"
-    tools:context=".AdminHomeActivity">
+    tools:context=".activity.AdminHomeActivity">
 
     <TextView
         android:id="@+id/text_add_room"

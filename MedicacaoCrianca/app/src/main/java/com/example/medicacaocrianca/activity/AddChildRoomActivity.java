@@ -1,22 +1,20 @@
-package com.example.medicacaocrianca;
+package com.example.medicacaocrianca.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.medicacaocrianca.dbobjects.ChildRoom;
-import com.example.medicacaocrianca.dbobjects.Children;
-import com.example.medicacaocrianca.dbobjects.Room;
+import com.example.medicacaocrianca.R;
+import com.example.medicacaocrianca.model.ChildRoom;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,7 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddChildRoom extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class AddChildRoomActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     private Spinner spinnerNames;
     private Spinner spinnerRooms;
@@ -59,9 +57,9 @@ public class AddChildRoom extends AppCompatActivity implements AdapterView.OnIte
                     list.add(names);
                 }
                 //Creates the adapter and set it's values to the list created previously
-                ArrayAdapter arrayAdapter = new ArrayAdapter(AddChildRoom.this,android.R.layout.simple_spinner_item, list);
-                arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerNames.setAdapter(arrayAdapter);
+                ArrayAdapter names = new ArrayAdapter(AddChildRoomActivity.this,android.R.layout.simple_spinner_item, list);
+                names.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerNames.setAdapter(names);
             }
 
             @Override
@@ -70,7 +68,7 @@ public class AddChildRoom extends AppCompatActivity implements AdapterView.OnIte
             }
         };
 
-        referenceName.addListenerForSingleValueEvent(names);
+        this.referenceName.addListenerForSingleValueEvent(names);
 
 
         ValueEventListener rooms = new ValueEventListener() {
@@ -83,7 +81,7 @@ public class AddChildRoom extends AppCompatActivity implements AdapterView.OnIte
                     list.add(names);
                 }
                 //Creates the adapter and set it's values to the list created previously
-                ArrayAdapter arrayAdapter = new ArrayAdapter(AddChildRoom.this,android.R.layout.simple_spinner_item, list);
+                ArrayAdapter arrayAdapter = new ArrayAdapter(AddChildRoomActivity.this,android.R.layout.simple_spinner_item, list);
                 arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerRooms.setAdapter(arrayAdapter);
             }
@@ -94,13 +92,13 @@ public class AddChildRoom extends AppCompatActivity implements AdapterView.OnIte
             }
         };
 
-        referenceRoom.addListenerForSingleValueEvent(rooms);
+        this.referenceRoom.addListenerForSingleValueEvent(rooms);
 
         this.confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 registerChildRoom();
-                Intent backHomeBtn = new Intent(AddChildRoom.this, AdminHomeActivity.class);
+                Intent backHomeBtn = new Intent(AddChildRoomActivity.this, AdminHomeActivity.class);
                 startActivity(backHomeBtn);
             }
         });
@@ -108,7 +106,7 @@ public class AddChildRoom extends AppCompatActivity implements AdapterView.OnIte
         this.backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent backHomeBtn = new Intent(AddChildRoom.this, AdminHomeActivity.class);
+                Intent backHomeBtn = new Intent(AddChildRoomActivity.this, AdminHomeActivity.class);
                 startActivity(backHomeBtn);
             }
         });
@@ -133,7 +131,7 @@ public class AddChildRoom extends AppCompatActivity implements AdapterView.OnIte
         int roomNumb = Integer.parseInt(spinnerRooms.getSelectedItem().toString());
         ChildRoom childRoom = new ChildRoom(roomNumb, name);
         reference.push().setValue(childRoom);
-        Toast.makeText(AddChildRoom.this,"Children added to a room successfully!", Toast.LENGTH_LONG).show();
+        Toast.makeText(AddChildRoomActivity.this,"Children added to a room successfully!", Toast.LENGTH_LONG).show();
 
     }
 }

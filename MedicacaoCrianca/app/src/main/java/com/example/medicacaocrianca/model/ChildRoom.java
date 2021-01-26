@@ -1,9 +1,9 @@
-package com.example.medicacaocrianca.dbobjects;
+package com.example.medicacaocrianca.model;
 
 public class ChildRoom {
 
-    int roomNumber;
-    String name;
+    private int roomNumber;
+    private String name;
 
     public ChildRoom(Integer roomNumber, String name){
         this.roomNumber = roomNumber;

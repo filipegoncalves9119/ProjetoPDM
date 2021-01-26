@@ -1,25 +1,21 @@
-package com.example.medicacaocrianca;
+package com.example.medicacaocrianca.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.location.Address;
-import android.net.wifi.hotspot2.pps.HomeSp;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Checkable;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.medicacaocrianca.dbobjects.Children;
-import com.example.medicacaocrianca.dbobjects.Room;
+import com.example.medicacaocrianca.R;
+import com.example.medicacaocrianca.model.Children;
+import com.example.medicacaocrianca.model.Room;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,7 +23,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.List;
 
 public class AddRoomActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {

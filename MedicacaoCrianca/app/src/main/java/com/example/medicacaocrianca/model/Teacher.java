@@ -1,4 +1,4 @@
-package com.example.medicacaocrianca.dbobjects;
+package com.example.medicacaocrianca.model;
 
 public class Teacher {
 
