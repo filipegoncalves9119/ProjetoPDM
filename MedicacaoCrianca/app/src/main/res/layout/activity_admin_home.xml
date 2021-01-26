@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#ffffff"
-        android:text="Administrator Area"
+        android:text="@string/admin_area"
         android:textSize="36sp" />
 
     <RelativeLayout
@@ -27,8 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
-
-        android:text="Add Children"/>
+        android:text="@string/add_children"/>
 </RelativeLayout>
 
 
@@ -41,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_centerHorizontal="true"
-            android:text="Add Teacher" />
+            android:text="@string/add_teacher" />
     </RelativeLayout>
 
 <RelativeLayout
@@ -53,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
-        android:text="Add Room"/>
+        android:text="@string/add_room"/>
 </RelativeLayout>
 
 
@@ -66,8 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
-
-        android:text="Add Children to room" />
+        android:text="@string/add_chil_to_room" />
 </RelativeLayout>
 
 

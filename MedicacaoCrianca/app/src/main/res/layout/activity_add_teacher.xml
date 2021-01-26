@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="30dp"
         android:textColor="@color/white"
-        android:text="Add Teacher"
+        android:text="@string/add_teacher"
         android:textSize="36dp" />
 
     <RelativeLayout
@@ -28,7 +28,8 @@
             android:layout_height="60dp"
             android:background="@color/white"
             android:textColor="@color/black"
-            android:hint="Full name"
+            android:textColorHint="#000000"
+            android:hint="@string/fullName"
             android:inputType="text"
             android:paddingBottom="5dp" />
     </RelativeLayout>
@@ -43,7 +44,8 @@
             android:layout_height="60dp"
             android:background="@color/white"
             android:textColor="@color/black"
-            android:hint="Email"
+            android:textColorHint="#000000"
+            android:hint="@string/write_email"
             android:inputType="textEmailAddress"
             android:paddingBottom="5dp" />
     </RelativeLayout>
@@ -58,7 +60,8 @@
             android:layout_height="60dp"
             android:background="@color/white"
             android:textColor="@color/black"
-            android:hint="password"
+            android:textColorHint="#000000"
+            android:hint="@string/write_password"
             android:inputType="textPassword"
             android:paddingBottom="5dp" />
     </RelativeLayout>
@@ -72,8 +75,9 @@
             android:layout_width="match_parent"
             android:background="@color/white"
             android:textColor="@color/black"
+            android:textColorHint="#000000"
             android:layout_height="60dp"
-            android:hint="password"
+            android:hint="@string/write_password"
             android:inputType="textPassword"
             android:paddingBottom="5dp" />
     </RelativeLayout>
@@ -89,7 +93,7 @@
             android:layout_alignParentStart="true"
             android:layout_marginTop="40dp"
             android:layout_marginStart="30dp"
-            android:text="Back"/>
+            android:text="@string/back"/>
 
         <Button
             android:id="@+id/save_btn_id"
@@ -98,8 +102,8 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="30dp"
             android:layout_marginTop="40dp"
-            android:text="Confirm"
-            app:srcCompat="@android:drawable/ic_menu_save" />
+            android:text="@string/confirm"
+            app:srcCompat="@android:drawable/ic_menu_save"/>
 
     </RelativeLayout>
 

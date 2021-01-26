@@ -13,7 +13,7 @@
 <TextView
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:text="Assign a children to a room"
+    android:text="@string/add_chil_to_room"
     android:textColor="#ffffff"
     android:textSize="36dp"
     />
@@ -26,7 +26,7 @@
             android:background="@color/white"
             android:textColor="@color/black"
             android:layout_height="40dp"
-            android:text="Pick a children"/>
+            android:text="@string/pickChildren"/>
     <Spinner
         android:id="@+id/spinner_name_id"
         android:layout_width="match_parent"
@@ -67,7 +67,7 @@
             android:layout_alignParentStart="true"
             android:layout_marginTop="40dp"
             android:layout_marginStart="30dp"
-            android:text="Back"/>
+            android:text="@string/back"/>
 
         <Button
             android:id="@+id/save_btn_idd"
@@ -76,7 +76,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="30dp"
             android:layout_marginTop="40dp"
-            android:text="Confirm" />
+            android:text="@string/confirm" />
 
     </RelativeLayout>
 

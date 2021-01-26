@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">MedicacaoCrianca</string>
+    <string name="sing_in">Entrar</string>
+    <string name="enter_email">Digite o seu e-mail</string>
+    <string name="enter_password">Digite a sua password</string>
+    <string name="welcome_teacher">Bem-vindo,</string>
+    <string name="teacher_home">Página Inicial do Professor</string>
+    <string name="room">Sala: </string>
+    <string name="admin_area">Área de Administrador</string>
+    <string name="add_children">Adicionar Criança</string>
+    <string name="add_teacher">Adicionar Professor</string>
+    <string name="add_room">Adicionar Sala</string>
+    <string name="add_chil_to_room">Adicionar Crianças à Sala</string>
+    <string name="fullName">Nome completo</string>
+    <string name="write_email">Email</string>
+    <string name="write_password">Password</string>
+    <string name="back">Retroceder</string>
+    <string name="confirm">Confirmar</string>
+    <string name="room_number">Número da Sala</string>
+    <string name="address">Morada</string>
+    <string name="birthDate">Data de Nascimento(ex.: 20/11/2016)</string>
+    <string name="parent_name">Responsible parent name</string>
+    <string name="phoneNumber">Número de telefone</string>
+    <string name="takePicture">Tirar Fotografiae</string>
+    <string name="selectGallery">Selecionar da Galaria</string>
+    <string name="pickChildren">Escolher a criança</string>
+    <string name="pickRoom">Escolher a Sala</string>
+
+
+
+</resources>

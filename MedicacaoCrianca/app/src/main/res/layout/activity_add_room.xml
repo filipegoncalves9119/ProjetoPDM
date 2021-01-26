@@ -14,8 +14,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="30dp"
+        android:text="@string/add_room"
         android:textColor="#ffffff"
-        android:text="Add Room"
         android:textSize="36dp" />
 
     <RelativeLayout
@@ -28,15 +28,18 @@
             android:layout_height="60dp"
             android:background="@color/white"
             android:textColor="@color/black"
-            android:hint="Room Number"
+            android:textColorHint="#000000"
+            android:hint="@string/room_number"
             android:inputType="number"
             android:paddingBottom="5dp" />
+
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/white"
+        android:textColorHint="#000000"
         android:textColor="@color/black">
 
         <Spinner
@@ -59,7 +62,7 @@
             android:layout_alignParentStart="true"
             android:layout_marginTop="40dp"
             android:layout_marginStart="30dp"
-            android:text="Back"/>
+            android:text="@string/back"/>
 
         <Button
             android:id="@+id/save_btn_id"
@@ -68,7 +71,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="30dp"
             android:layout_marginTop="40dp"
-            android:text="Confirm"
+            android:text="@string/confirm"
             app:srcCompat="@android:drawable/ic_menu_save" />
 
     </RelativeLayout>

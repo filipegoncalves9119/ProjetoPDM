@@ -26,7 +26,7 @@
             android:layout_marginEnd="1dp"
             android:layout_toStartOf="@+id/nome_id"
             android:gravity="center"
-            android:text="Wellcome,"/>
+            android:text="@string/welcome_teacher"/>
 
         <TextView
             android:id="@+id/nome_id"
@@ -42,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:gravity="center"
-        android:text="Teacher Home"
+        android:text="@string/teacher_home"
         android:textColor="#ffffff"
         android:textSize="36dp"/>
 
@@ -56,7 +56,7 @@
         android:layout_marginStart="115dp"
 
         android:gravity="center"
-        android:text="Room: "
+        android:text="@string/room"
         android:textColor="#ffffff"/>
 
         <TextView

@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="30dp"
         android:paddingBottom="40dp"
-        android:text="Add children"
+        android:text="@string/add_children"
         android:textSize="36dp" />
 
     <RelativeLayout
@@ -26,7 +26,7 @@
             android:id="@+id/full_name_text_id"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:hint="Full name"
+            android:hint="@string/fullName"
             android:inputType="text"
             android:paddingBottom="5dp" />
     </RelativeLayout>
@@ -39,7 +39,7 @@
             android:id="@+id/address_text_id"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:hint="Address"
+            android:hint="@string/address"
             android:inputType="text"
             android:paddingBottom="5dp" />
     </RelativeLayout>
@@ -52,7 +52,7 @@
             android:id="@+id/bithdate_text_id"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:hint="BirthDate(ex.: 20/11/2016)"
+            android:hint="@string/birthDate"
             android:inputType="text"
             android:paddingBottom="5dp" />
     </RelativeLayout>
@@ -65,7 +65,7 @@
             android:id="@+id/parent_text_id"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:hint="Responsible parent name"
+            android:hint="@string/parent_name"
             android:inputType="text"
             android:paddingBottom="5dp" />
     </RelativeLayout>
@@ -78,7 +78,7 @@
             android:id="@+id/number_text_id"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:hint="PhoneNumber"
+            android:hint="@string/phoneNumber"
             android:inputType="number"
             android:paddingBottom="5dp" />
     </RelativeLayout>
@@ -95,7 +95,7 @@
             android:layout_centerInParent="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:text="Take picture">
+            android:text="@string/takePicture">
 
         </Button>
         <Button
@@ -129,7 +129,7 @@
            android:layout_alignParentStart="true"
            android:layout_marginTop="40dp"
            android:layout_marginStart="30dp"
-           android:text="Back"/>
+           android:text="@string/back"/>
 
        <Button
            android:id="@+id/save_btn_id"
@@ -138,7 +138,7 @@
            android:layout_alignParentEnd="true"
            android:layout_marginEnd="30dp"
            android:layout_marginTop="40dp"
-           android:text="Confirm"
+           android:text="@string/confirm"
            app:srcCompat="@android:drawable/ic_menu_save" />
 
    </RelativeLayout>

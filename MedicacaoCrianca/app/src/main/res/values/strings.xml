@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">MedicacaoCrianca</string>
+    <string name="sing_in">Sing In</string>
+    <string name="enter_email">Enter your e-mail</string>
+    <string name="enter_password">Enter your password</string>
+    <string name="welcome_teacher">Welcome,</string>
+    <string name="teacher_home">Home Page Teacher</string>
+    <string name="room">Room: </string>
+    <string name="admin_area">Administrator Area</string>
+    <string name="add_children">Add Children</string>
+    <string name="add_teacher">Add Teacher</string>
+    <string name="add_room">Add Room</string>
+    <string name="add_chil_to_room">Assign Children to room</string>
+    <string name="fullName">Full name</string>
+    <string name="write_email">Email</string>
+    <string name="write_password">Password</string>
+    <string name="back">Back</string>
+    <string name="confirm">Confirm</string>
+    <string name="room_number">Room Number</string>
+    <string name="address">Address</string>
+    <string name="birthDate">BirthDate(ex.: 20/11/2016)</string>
+    <string name="parent_name">Responsible parent name</string>
+    <string name="phoneNumber">Phone Number</string>
+    <string name="takePicture">Take picture</string>
+    <string name="selectGallery">Select from gallery</string>
+    <string name="pickChildren">Pick a Children</string>
+    <string name="pickRoom">Pick a room</string>
+
 </resources>
