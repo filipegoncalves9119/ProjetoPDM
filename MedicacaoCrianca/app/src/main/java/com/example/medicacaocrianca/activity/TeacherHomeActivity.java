@@ -150,9 +150,9 @@ public class TeacherHomeActivity extends AppCompatActivity {
             }
         });
 
-
     }
     */
+
 
     private void setRoomNumber() {
         Query query = database.child("Room").orderByChild("teacher").equalTo(teacherName.getText().toString());
@@ -173,16 +173,18 @@ public class TeacherHomeActivity extends AppCompatActivity {
     }
 
     private void getChildrenByRoom() {
-        Query query = database.child("ChildRoom").orderByChild("roomNumber").equalTo(Integer.parseInt(roomNumber.getText().toString()));
+        Query query = database.child("ChildRoom").orderByChild("roomNumber").equalTo(1);
+
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data : snapshot.getChildren()) {
                     Children children = new Children();
                     children.setFullName(data.child("name").getValue().toString());
-
+                    children.setUri(data.child("uri").getValue().toString());
                     list.add(children);
                     Log.i("FIREBASE-fire", data.child("name").getValue().toString());
+                    Log.i("URI", data.child("uri").getValue().toString());
 
                 }
             }
