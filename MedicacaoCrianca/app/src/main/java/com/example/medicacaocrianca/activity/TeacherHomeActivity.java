@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,79 +33,78 @@ public class TeacherHomeActivity extends AppCompatActivity {
     private TextView roomNumber;
     private FirebaseUser user;
     private DatabaseReference database;
-
+    DatabaseReference reference;
     private RecyclerView recyclerView;
     private ChildAdapter adapter;
     private List<Children> childrenList = new ArrayList<>();
     private List<Children> list = new ArrayList<>();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_home);
-
+        this.reference = FirebaseDatabase.getInstance().getReference();
         this.roomNumber = findViewById(R.id.text_view_room_n_id);
         this.teacherName = findViewById(R.id.nome_id);
         this.user = FirebaseAuth.getInstance().getCurrentUser();
         this.database = FirebaseDatabase.getInstance().getReference();
         this.recyclerView = findViewById(R.id.recycler_view);
+        //roomNumber.setText("1");
         setTeacherName();
         setRoomNumber();
-
+        getChildrenByRoom();
 
     }
 
-    public void loadChildren(){
+    public void loadChildren() {
 
         //listar crianças
         Children children1 = new Children();
         children1.setAddress("aaa");
         children1.setBirthDate("10/10/2000");
         children1.setFullName("joao estevacio");
-        children1.setParent("maria");
-        children1.setPhoneNumber("99492234");
+
         childrenList.add(children1);
 
         Children children2 = new Children();
         children2.setAddress("aaa");
         children2.setBirthDate("10/10/2000");
         children2.setFullName("joao estevacio");
-        children2.setParent("maria");
-        children2.setPhoneNumber("99492234");
+
         childrenList.add(children2);
-
-
 
         //exibir os garotos no reyclerview
 
-
-
-        getChildrenByRoom();
+        List<Children> children = new ArrayList<>();
+        children = childrenList;
 
         //configurar adatper
         adapter = new ChildAdapter(list);
-
 
         //confiogurar recyclervie
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(),LinearLayout.VERTICAL));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayout.VERTICAL));
         recyclerView.setAdapter(adapter);
 
     }
 
     @Override
     protected void onStart() {
+
+        Log.i("testar", list.toString());
         loadChildren();
         super.onStart();
     }
 
     /**
      * Method to return e-mail
+     *
      * @return authenticated email user
      */
-    private String getUserEmail(){
+    private String getUserEmail() {
         return this.user.getEmail();
 
     }
@@ -114,12 +114,12 @@ public class TeacherHomeActivity extends AppCompatActivity {
      * gets the children name according and sets it to the textView
      */
 
-    private void setTeacherName(){
+    private void setTeacherName() {
         Query query = database.child("Teacher").orderByChild("email").equalTo(getUserEmail());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot data : snapshot.getChildren()){
+                for (DataSnapshot data : snapshot.getChildren()) {
                     String name = data.child("name").getValue().toString();
                     teacherName.setText(name);
                 }
@@ -154,12 +154,12 @@ public class TeacherHomeActivity extends AppCompatActivity {
     }
     */
 
-    private void setRoomNumber(){
-        Query query = database.child("Room").orderByChild("teacher").equalTo("Cristiano Ronaldo");
+    private void setRoomNumber() {
+        Query query = database.child("Room").orderByChild("teacher").equalTo(teacherName.getText().toString());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot data : snapshot.getChildren()){
+                for (DataSnapshot data : snapshot.getChildren()) {
                     String number = data.child("number").getValue().toString();
                     roomNumber.setText(number);
                 }
@@ -172,16 +172,19 @@ public class TeacherHomeActivity extends AppCompatActivity {
         });
     }
 
-    private void getChildrenByRoom(){
-        Query query = database.child("ChildRoom").orderByChild("roomNumber").equalTo("1");
+    private void getChildrenByRoom() {
+        Query query = database.child("ChildRoom").orderByChild("roomNumber").equalTo(Integer.parseInt(roomNumber.getText().toString()));
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot data : snapshot.getChildren()){
-                    Children children = new Children(data.child("name").getValue().toString());
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    Children children = new Children();
+                    children.setFullName(data.child("name").getValue().toString());
+
                     list.add(children);
+                    Log.i("FIREBASE-fire", data.child("name").getValue().toString());
+
                 }
-                Toast.makeText(TeacherHomeActivity.this,list.toString(),Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -190,8 +193,6 @@ public class TeacherHomeActivity extends AppCompatActivity {
             }
         });
 
+
     }
-
-
-
 }

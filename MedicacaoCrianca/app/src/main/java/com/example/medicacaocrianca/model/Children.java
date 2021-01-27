@@ -7,6 +7,7 @@ public class Children {
     private String birthDate;
     private String phoneNumber;
     private String parent;
+    private String uri;
 
     /**
      * Class constructor
@@ -16,17 +17,15 @@ public class Children {
      * @param phoneNumber
      * @param parent
      */
-    public Children(String fullName, String address, String birthDate, String phoneNumber, String parent) {
+    public Children(String fullName, String address, String birthDate, String phoneNumber, String parent, String uri) {
         this.fullName = fullName;
         this.address = address;
         this.birthDate = birthDate;
         this.phoneNumber = phoneNumber;
         this.parent = parent;
+        this.uri = uri;
     }
 
-    public Children(String fullName){
-        this.fullName = fullName;
-    }
 
     /**
      * Class Constructor
@@ -73,5 +72,13 @@ public class Children {
 
     public void setParent(String parent) {
         this.parent = parent;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 }

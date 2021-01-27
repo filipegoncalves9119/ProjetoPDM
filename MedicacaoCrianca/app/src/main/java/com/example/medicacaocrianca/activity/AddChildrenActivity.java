@@ -11,9 +11,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,8 +24,10 @@ import android.widget.Toast;
 
 import com.example.medicacaocrianca.R;
 import com.example.medicacaocrianca.model.Children;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -45,11 +49,10 @@ public class AddChildrenActivity extends AppCompatActivity {
     private Button openGallery;
     private ImageView picture;
     private DatabaseReference reference;
+    private String uri;
     private static final int REQUEST_CAMERA_CODE = 100;
     private static final int REQUEST_GALLERY_CODE = 200;
     // Create a storage reference from our app
-
-
 
 
     /**
@@ -77,8 +80,6 @@ public class AddChildrenActivity extends AppCompatActivity {
         // Create a storage reference from our app
 
 
-
-
         //Camera request
         if (ContextCompat.checkSelfPermission(AddChildrenActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(AddChildrenActivity.this, new String[]{
@@ -104,7 +105,8 @@ public class AddChildrenActivity extends AppCompatActivity {
         this.confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                register(fullName.getText().toString(), address.getText().toString(), birthdate.getText().toString(), parent.getText().toString(), phoneNumber.getText().toString(), picture);
+                upLoadToFireBase();
+                //register(fullName.getText().toString(), address.getText().toString(), birthdate.getText().toString(), parent.getText().toString(), phoneNumber.getText().toString(), picture);
 
             }
         });
@@ -137,10 +139,10 @@ public class AddChildrenActivity extends AppCompatActivity {
      * @param parent
      * @param phone
      */
-    private void addChildren(String name, String address, String birthdate, String parent, String phone) {
+    private void addChildren(String name, String address, String birthdate, String parent, String phone, String uri) {
 
         if (!name.equals("") && !address.equals("") && !birthdate.equals("") && !parent.equals("") && !phone.equals("")) {
-            Children children = new Children(name, address, birthdate, parent, phone);
+            Children children = new Children(name, address, birthdate, parent, phone, uri);
             this.reference.push().setValue(children);
         }
     }
@@ -150,6 +152,7 @@ public class AddChildrenActivity extends AppCompatActivity {
      * Method to check if the text areas are filled
      * if all filled, calls for method to add the data to the database
      * calls for home activity
+     *
      * @param name
      * @param address
      * @param birthdate
@@ -158,27 +161,7 @@ public class AddChildrenActivity extends AppCompatActivity {
      * @param imageView
      */
     private void register(String name, String address, String birthdate, String parent, String phone, ImageView imageView) {
-        if (TextUtils.isEmpty(name)) {
-            this.fullName.setError("Enter a name");
-        } else if (TextUtils.isEmpty(address)) {
-            this.address.setError("Enter an address");
-        } else if (TextUtils.isEmpty(birthdate)) {
-            this.birthdate.setError("Enter a birth date");
-        } else if (TextUtils.isEmpty(parent)) {
-            this.parent.setError("Enter the responsible parent");
-        } else if (TextUtils.isEmpty(phone)) {
-            this.phoneNumber.setError("Enter phone number");
-        }
 
-
-        if (!name.equals("") && !address.equals("") && !birthdate.equals("") && !parent.equals("") && !phone.equals("") && imageView.getDrawable() != null) {
-
-            addChildren(name, address, birthdate, parent, phone);
-            Toast.makeText(AddChildrenActivity.this, "Children added sucessfuly", Toast.LENGTH_SHORT).show();
-            Intent backHome = new Intent(AddChildrenActivity.this, AdminHomeActivity.class);
-            startActivity(backHome);
-            uploadPicture();
-        }
     }
 
 
@@ -221,10 +204,10 @@ public class AddChildrenActivity extends AppCompatActivity {
      * using Storage reference stores a picture
      * converts an image to an array of bytes
      */
-    private void uploadPicture(){
+    private void upLoadToFireBase() {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference databaseReference = storage.getReference();
-        StorageReference storageReference = databaseReference.child("images/" +this.fullName.getText().toString() +".jpg");
+        StorageReference storageReference = databaseReference.child("images/" + this.fullName.getText().toString() + ".jpg");
 
         // Get the data from an ImageView as bytes
         picture.setDrawingCacheEnabled(true);
@@ -244,7 +227,34 @@ public class AddChildrenActivity extends AppCompatActivity {
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                storageReference.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
 
+
+                        if (TextUtils.isEmpty(fullName.getText().toString())) {
+                            fullName.setError("Enter a name");
+                        } else if (TextUtils.isEmpty(address.getText().toString())) {
+                            address.setError("Enter an address");
+                        } else if (TextUtils.isEmpty(birthdate.getText().toString())) {
+                            birthdate.setError("Enter a birth date");
+                        } else if (TextUtils.isEmpty(parent.getText().toString())) {
+                            parent.setError("Enter the responsible parent");
+                        } else if (TextUtils.isEmpty(phoneNumber.getText().toString())) {
+                            phoneNumber.setError("Enter phone number");
+                        }
+
+                        if (!fullName.getText().toString().equals("") && !address.getText().toString().equals("") && !birthdate.getText().toString().equals("")
+                                && !parent.getText().toString().equals("") && !phoneNumber.getText().toString().equals("") && picture.getDrawable() != null) {
+                            addChildren(fullName.getText().toString(), address.getText().toString(), birthdate.getText().toString(), phoneNumber.getText().toString(), parent.getText().toString(), task.toString());
+                            Toast.makeText(AddChildrenActivity.this, "Children added sucessfuly", Toast.LENGTH_SHORT).show();
+                            Intent backHome = new Intent(AddChildrenActivity.this, AdminHomeActivity.class);
+                            startActivity(backHome);
+
+                        }
+
+                    }
+                });
             }
         });
 
