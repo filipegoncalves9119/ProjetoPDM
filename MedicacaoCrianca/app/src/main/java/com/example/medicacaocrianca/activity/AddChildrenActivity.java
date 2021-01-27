@@ -149,23 +149,6 @@ public class AddChildrenActivity extends AppCompatActivity {
 
 
     /**
-     * Method to check if the text areas are filled
-     * if all filled, calls for method to add the data to the database
-     * calls for home activity
-     *
-     * @param name
-     * @param address
-     * @param birthdate
-     * @param parent
-     * @param phone
-     * @param imageView
-     */
-    private void register(String name, String address, String birthdate, String parent, String phone, ImageView imageView) {
-
-    }
-
-
-    /**
      * Method to start the gallery pick activity
      */
     private void pickImageFromGallery() {
@@ -209,57 +192,51 @@ public class AddChildrenActivity extends AppCompatActivity {
         StorageReference databaseReference = storage.getReference();
         StorageReference storageReference = databaseReference.child("images/" + this.fullName.getText().toString() + ".jpg");
 
-        // Get the data from an ImageView as bytes
-        picture.setDrawingCacheEnabled(true);
-        picture.buildDrawingCache();
-        Bitmap bitmap = ((BitmapDrawable) picture.getDrawable()).getBitmap();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] data = baos.toByteArray();
+        if (TextUtils.isEmpty(fullName.getText().toString())) {
+            fullName.setError("Enter a name");
+        } else if (TextUtils.isEmpty(address.getText().toString())) {
+            address.setError("Enter an address");
+        } else if (TextUtils.isEmpty(birthdate.getText().toString())) {
+            birthdate.setError("Enter a birth date");
+        } else if (TextUtils.isEmpty(parent.getText().toString())) {
+            parent.setError("Enter the responsible parent");
+        } else if (TextUtils.isEmpty(phoneNumber.getText().toString())) {
+            phoneNumber.setError("Enter phone number");
+        }
 
-        UploadTask uploadTask = storageReference.putBytes(data);
+        //prevents from null data to go into database
+        if (!fullName.getText().toString().equals("") && !address.getText().toString().equals("") && !birthdate.getText().toString().equals("")
+                && !parent.getText().toString().equals("") && !phoneNumber.getText().toString().equals("") && picture.getDrawable() != null) {
+            // Get the data from an ImageView as bytes
+            picture.setDrawingCacheEnabled(true);
+            picture.buildDrawingCache();
+            Bitmap bitmap = ((BitmapDrawable) picture.getDrawable()).getBitmap();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] data = baos.toByteArray();
 
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
+            UploadTask uploadTask = storageReference.putBytes(data);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
 
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                storageReference.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Uri> task) {
-
-
-                        if (TextUtils.isEmpty(fullName.getText().toString())) {
-                            fullName.setError("Enter a name");
-                        } else if (TextUtils.isEmpty(address.getText().toString())) {
-                            address.setError("Enter an address");
-                        } else if (TextUtils.isEmpty(birthdate.getText().toString())) {
-                            birthdate.setError("Enter a birth date");
-                        } else if (TextUtils.isEmpty(parent.getText().toString())) {
-                            parent.setError("Enter the responsible parent");
-                        } else if (TextUtils.isEmpty(phoneNumber.getText().toString())) {
-                            phoneNumber.setError("Enter phone number");
-                        }
-
-                        if (!fullName.getText().toString().equals("") && !address.getText().toString().equals("") && !birthdate.getText().toString().equals("")
-                                && !parent.getText().toString().equals("") && !phoneNumber.getText().toString().equals("") && picture.getDrawable() != null) {
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    storageReference.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            //on success image sent to data base storage creates new children with given information
                             addChildren(fullName.getText().toString(), address.getText().toString(), birthdate.getText().toString(), phoneNumber.getText().toString(), parent.getText().toString(), task.toString());
                             Toast.makeText(AddChildrenActivity.this, "Children added sucessfuly", Toast.LENGTH_SHORT).show();
                             Intent backHome = new Intent(AddChildrenActivity.this, AdminHomeActivity.class);
                             startActivity(backHome);
 
                         }
-
-                    }
-                });
-            }
-        });
-
-
+                    });
+                }
+            });
+        }
     }
-
-
 }
