@@ -84,7 +84,7 @@ public class TeacherHomeActivity extends AppCompatActivity {
         // Log.i("VERIFICAR-VASIO", list.get(0).getFullName());
 
         //exibir os garotos no reyclerview
-        adapter = new ChildAdapter(list);
+        adapter = new ChildAdapter(this.getApplicationContext(), list);
 
         //confiogurar recyclervie
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());

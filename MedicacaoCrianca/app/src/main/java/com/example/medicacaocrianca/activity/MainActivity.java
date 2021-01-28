@@ -45,9 +45,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 login();
-               // Intent intent = new Intent(MainActivity.this, AdminHomeActivity.class);
-                //startActivity(intent);
-
             }
         });
     }
@@ -80,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(MainActivity.this, AdminHomeActivity.class);
                         startActivity(intent);
                     }else {
-                    //    Toast.makeText(MainActivity.this,"Sucefully logged in",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this,"Sucefully logged in",Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainActivity.this, TeacherHomeActivity.class);
                         startActivity(intent);
                     }
