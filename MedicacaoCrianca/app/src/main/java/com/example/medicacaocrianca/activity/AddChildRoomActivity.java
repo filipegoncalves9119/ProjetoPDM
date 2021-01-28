@@ -3,6 +3,7 @@ package com.example.medicacaocrianca.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.UiAutomation;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,12 +19,23 @@ import android.widget.Toast;
 import com.example.medicacaocrianca.R;
 import com.example.medicacaocrianca.model.ChildRoom;
 
+import com.example.medicacaocrianca.model.Children;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,12 +46,10 @@ public class AddChildRoomActivity extends AppCompatActivity implements AdapterVi
     private Spinner spinnerRooms;
     private Button confirmBtn;
     private Button backBtn;
-     String uri;
-    DatabaseReference referenceName;
-    DatabaseReference referenceRoom;
-    DatabaseReference reference;
+    private String uri;
+    FirebaseFirestore db;
     DatabaseReference referenceForUri;
-
+    List<String> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,97 +59,69 @@ public class AddChildRoomActivity extends AppCompatActivity implements AdapterVi
         this.spinnerRooms = findViewById(R.id.spinner_room_id);
         this.backBtn = findViewById(R.id.back_btn_idd);
         this.confirmBtn = findViewById(R.id.save_btn_idd);
-        this.referenceName = FirebaseDatabase.getInstance().getReference().child("Children");
-        this.referenceRoom = FirebaseDatabase.getInstance().getReference().child("Room");
-        this.reference = FirebaseDatabase.getInstance().getReference().child("ChildRoom");
+        this.db = FirebaseFirestore.getInstance();
         this.referenceForUri = FirebaseDatabase.getInstance().getReference();
 
-        ValueEventListener names = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+        //gets list of childrens in the database
+        db.collection("children").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 List<String> list = new ArrayList<>();
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    String names = data.child("fullName").getValue().toString();
-                    list.add(names);
+                for (DocumentSnapshot documentSnapshot : task.getResult()) {
+                    list.add(documentSnapshot.getString("fullName"));
                 }
                 //Creates the adapter and set it's values to the list created previously
                 ArrayAdapter names = new ArrayAdapter(AddChildRoomActivity.this, android.R.layout.simple_spinner_item, list);
                 names.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerNames.setAdapter(names);
             }
-
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onFailure(@NonNull Exception e) {
 
             }
-        };
+        });
 
-        this.referenceName.addListenerForSingleValueEvent(names);
-
-
-        ValueEventListener rooms = new ValueEventListener() {
+        //get the rooms registed in the database
+        db.collection("room").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<String> list = new ArrayList<>();
-
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    String names = data.child("number").getValue().toString();
-                    list.add(names);
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                List<Integer> list = new ArrayList<>();
+                for (DocumentSnapshot documentSnapshot : task.getResult()) {
+                    list.add(documentSnapshot.getDouble("number").intValue());
                 }
                 //Creates the adapter and set it's values to the list created previously
                 ArrayAdapter arrayAdapter = new ArrayAdapter(AddChildRoomActivity.this, android.R.layout.simple_spinner_item, list);
                 arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerRooms.setAdapter(arrayAdapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        };
-
-        this.referenceRoom.addListenerForSingleValueEvent(rooms);
-
-
-        //Query to filter the uri for the chosen children
-        Query query = referenceForUri.child("Children").orderByChild("fullName").equalTo("boyz");
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot data : snapshot.getChildren()){
-                    uri = data.child("uri").getValue().toString();
-                   // Toast.makeText(AddChildRoomActivity.this, uri, Toast.LENGTH_LONG).show();
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onFailure(@NonNull Exception e) {
 
             }
         });
-
-
 
         this.confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 registerChildRoom();
-                Intent backHomeBtn = new Intent(AddChildRoomActivity.this, AdminHomeActivity.class);
-                startActivity(backHomeBtn);
+                Intent backHome = new Intent(AddChildRoomActivity.this, AdminHomeActivity.class);
+                startActivity(backHome);
             }
         });
 
         this.backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent backHomeBtn = new Intent(AddChildRoomActivity.this, AdminHomeActivity.class);
-                startActivity(backHomeBtn);
+                Intent backHome = new Intent(AddChildRoomActivity.this, AdminHomeActivity.class);
+                startActivity(backHome);
             }
         });
 
-
     }
-
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -152,18 +134,35 @@ public class AddChildRoomActivity extends AppCompatActivity implements AdapterVi
 
     }
 
-
     private void registerChildRoom() {
-
         String name = spinnerNames.getSelectedItem().toString();
+
         int roomNumb = Integer.parseInt(spinnerRooms.getSelectedItem().toString());
 
-        ChildRoom childRoom = new ChildRoom(roomNumb, name, uri);
-        reference.push().setValue(childRoom);
-        Toast.makeText(AddChildRoomActivity.this, "Children added to a room successfully!", Toast.LENGTH_LONG).show();
+        db.collection("children").whereEqualTo("fullName", name).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                    this.uri = queryDocumentSnapshot.getString("uri");
+                }
+            }
+
+            ChildRoom childRoom = new ChildRoom(roomNumb, name, uri);
+            db.collection("childroom").add(childRoom).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentReference> task) {
+                    Toast.makeText(AddChildRoomActivity.this, "Children added to a room successfully!", Toast.LENGTH_LONG).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                }
+            });
+        });
+
 
     }
 
-    
-
 }
+
+

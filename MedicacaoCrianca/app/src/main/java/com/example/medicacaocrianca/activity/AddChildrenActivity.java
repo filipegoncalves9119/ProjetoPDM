@@ -30,6 +30,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -49,7 +51,7 @@ public class AddChildrenActivity extends AppCompatActivity {
     private Button openGallery;
     private ImageView picture;
     private DatabaseReference reference;
-    private String uri;
+    private FirebaseFirestore db;
     private static final int REQUEST_CAMERA_CODE = 100;
     private static final int REQUEST_GALLERY_CODE = 200;
     // Create a storage reference from our app
@@ -77,6 +79,7 @@ public class AddChildrenActivity extends AppCompatActivity {
         this.picture = findViewById(R.id.image_id);
         this.openGallery = findViewById(R.id.gallery_btn_id);
         this.reference = FirebaseDatabase.getInstance().getReference().child("Children");
+        this.db = FirebaseFirestore.getInstance();
         // Create a storage reference from our app
 
 
@@ -143,7 +146,18 @@ public class AddChildrenActivity extends AppCompatActivity {
 
         if (!name.equals("") && !address.equals("") && !birthdate.equals("") && !parent.equals("") && !phone.equals("")) {
             Children children = new Children(name, address, birthdate, parent, phone, uri);
-            this.reference.push().setValue(children);
+          db.collection("children").add(children).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+              @Override
+              public void onSuccess(DocumentReference documentReference) {
+
+              }
+          })
+                  .addOnFailureListener(new OnFailureListener() {
+                      @Override
+                      public void onFailure(@NonNull Exception e) {
+
+                      }
+                  });
         }
     }
 
@@ -207,6 +221,7 @@ public class AddChildrenActivity extends AppCompatActivity {
         //prevents from null data to go into database
         if (!fullName.getText().toString().equals("") && !address.getText().toString().equals("") && !birthdate.getText().toString().equals("")
                 && !parent.getText().toString().equals("") && !phoneNumber.getText().toString().equals("") && picture.getDrawable() != null) {
+
             // Get the data from an ImageView as bytes
             picture.setDrawingCacheEnabled(true);
             picture.buildDrawingCache();

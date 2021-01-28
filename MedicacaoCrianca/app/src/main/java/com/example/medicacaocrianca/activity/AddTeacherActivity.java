@@ -15,11 +15,15 @@ import android.widget.Toast;
 import com.example.medicacaocrianca.R;
 import com.example.medicacaocrianca.model.Teacher;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AddTeacherActivity extends AppCompatActivity {
 
@@ -31,6 +35,7 @@ public class AddTeacherActivity extends AppCompatActivity {
     private EditText passwordConfirm;
     private FirebaseAuth firebase;
     private DatabaseReference reference;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +50,7 @@ public class AddTeacherActivity extends AppCompatActivity {
         this.passwordConfirm = findViewById(R.id.teacher_password_confirm_text_id);
         this.firebase = FirebaseAuth.getInstance();
         this.reference = FirebaseDatabase.getInstance().getReference().child("Teacher");
-
+        this.db = FirebaseFirestore.getInstance();
 
         this.backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +105,7 @@ public class AddTeacherActivity extends AppCompatActivity {
             return;
         }
 */
+        //mudar
         firebase.createUserWithEmailAndPassword(mail,passConfirm).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -117,9 +123,24 @@ public class AddTeacherActivity extends AppCompatActivity {
         return (!TextUtils.isEmpty(charSequence) && Patterns.EMAIL_ADDRESS.matcher(charSequence).matches());
 
     }
+
     private void register(){
-        Teacher teacher = new Teacher(this.fullName.getText().toString(), this.email.getText().toString(), this.password.getText().toString());
-        reference.push().setValue(teacher);
+
+        Teacher teacher = new Teacher(this.fullName.getText().toString(), this.email.getText().toString());
+
+        db.collection("teacher").add(teacher).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+
+            }
+        })
+        .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+
 
 
     }

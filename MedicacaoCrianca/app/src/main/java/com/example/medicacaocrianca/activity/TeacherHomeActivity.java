@@ -15,6 +15,10 @@ import android.widget.Toast;
 import com.example.medicacaocrianca.R;
 import com.example.medicacaocrianca.adapter.ChildAdapter;
 import com.example.medicacaocrianca.model.Children;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,6 +27,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +46,8 @@ public class TeacherHomeActivity extends AppCompatActivity {
     private ChildAdapter adapter;
     private List<Children> childrenList = new ArrayList<>();
     private List<Children> list = new ArrayList<>();
-
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private int number;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +61,7 @@ public class TeacherHomeActivity extends AppCompatActivity {
         this.recyclerView = findViewById(R.id.recycler_view);
         //roomNumber.setText("1");
         setTeacherName();
-        setRoomNumber();
-        getChildrenByRoom();
+
 
     }
 
@@ -63,23 +71,19 @@ public class TeacherHomeActivity extends AppCompatActivity {
         Children children1 = new Children();
         children1.setAddress("aaa");
         children1.setBirthDate("10/10/2000");
-        children1.setFullName("joao estevacio");
+        children1.setFullName("Joao Estevacio");
 
         childrenList.add(children1);
 
         Children children2 = new Children();
         children2.setAddress("aaa");
         children2.setBirthDate("10/10/2000");
-        children2.setFullName("joao estevacio");
+        children2.setFullName("Diogo simao");
 
         childrenList.add(children2);
+        // Log.i("VERIFICAR-VASIO", list.get(0).getFullName());
 
         //exibir os garotos no reyclerview
-
-        List<Children> children = new ArrayList<>();
-        children = childrenList;
-
-        //configurar adatper
         adapter = new ChildAdapter(list);
 
         //confiogurar recyclervie
@@ -94,7 +98,6 @@ public class TeacherHomeActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
 
-        Log.i("testar", list.toString());
         loadChildren();
         super.onStart();
     }
@@ -109,92 +112,46 @@ public class TeacherHomeActivity extends AppCompatActivity {
 
     }
 
+
     /**
      * Method to query the database on Teacher collection and search for the email used on the authentication
+     * Continue with task to get the teacher current room
+     * on Complete previous task queries for the children that belong to the room
+     * fills list to be shown in the recycler view
      * gets the children name according and sets it to the textView
      */
 
     private void setTeacherName() {
-        Query query = database.child("Teacher").orderByChild("email").equalTo(getUserEmail());
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+
+        db.collection("teacher").whereEqualTo("email", getUserEmail()).get().continueWithTask(new Continuation<QuerySnapshot, Task<QuerySnapshot>>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    String name = data.child("name").getValue().toString();
-                    teacherName.setText(name);
-                }
+            public Task<QuerySnapshot> then(@NonNull Task<QuerySnapshot> task) throws Exception {
+                String field = (String) task.getResult().getDocuments().get(0).get("name");
+                teacherName.setText(field);
+                return db.collection("teacher").whereEqualTo("name", field).get();
             }
+        }).continueWithTask(task -> {
+            String name = (String) (task.getResult().getDocuments().get(0).get("name"));
+            db.collection("room").whereEqualTo("teacher", name).get().addOnCompleteListener(task1 -> {
+              this.number = task1.getResult().getDocuments().get(0).getDouble("number").intValue();
+                String num = number+"";
+                roomNumber.setText(num);
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            });
+            return db.collection("room").whereEqualTo("number",this.number).get();
 
-            }
-        });
-    }
-
-    /*
-    private void setTeacherName(){
-        database.child("Teacher").orderByChild("email").equalTo(getUserEmail()).get().continueWithTask(new Continuation<DataSnapshot, Task<Query>>() {
-            @Override
-            public Task<Query> then(@NonNull Task<DataSnapshot> task) throws Exception {
-                String a = "asda";
-                Toast.makeText(TeacherHomeActivity.this,a,Toast.LENGTH_LONG).show();
-
-            }
-        }).addOnSuccessListener(this, new OnSuccessListener<Query>() {
-            @Override
-            public void onSuccess(Query query) {
-                teacherName.setText(query.equalTo("name").toString());
-                String a = teacherName.getText().toString();
-                Toast.makeText(TeacherHomeActivity.this,a,Toast.LENGTH_LONG).show();
-            }
-        });
-
-    }
-    */
-
-
-    private void setRoomNumber() {
-        Query query = database.child("Room").orderByChild("teacher").equalTo(teacherName.getText().toString());
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    String number = data.child("number").getValue().toString();
-                    roomNumber.setText(number);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void getChildrenByRoom() {
-        Query query = database.child("ChildRoom").orderByChild("roomNumber").equalTo(1);
-
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot data : snapshot.getChildren()) {
+        }).addOnCompleteListener(task -> {
+            db.collection("childroom").whereEqualTo("roomNumber",this.number).get().addOnCompleteListener(task12 -> {
+                for(DocumentSnapshot documentSnapshot : task12.getResult()){
                     Children children = new Children();
-                    children.setFullName(data.child("name").getValue().toString());
-                    children.setUri(data.child("uri").getValue().toString());
+                    children.setFullName(documentSnapshot.get("name").toString());
+                    children.setUri(documentSnapshot.get("uri").toString());
                     list.add(children);
-                    Log.i("FIREBASE-fire", data.child("name").getValue().toString());
-                    Log.i("URI", data.child("uri").getValue().toString());
-
                 }
-            }
+                adapter.notifyDataSetChanged();
+            });
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
         });
-
 
     }
 }

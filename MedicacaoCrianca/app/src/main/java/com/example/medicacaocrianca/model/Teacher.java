@@ -6,10 +6,10 @@ public class Teacher {
     private String email;
     private String password;
 
-    public Teacher(String name, String email, String password) {
+    public Teacher(String name, String email) {
         this.name = name;
         this.email = email;
-        this.password = password;
+
     }
 
     public Teacher() {
@@ -32,11 +32,5 @@ public class Teacher {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }
