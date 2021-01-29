@@ -11,12 +11,19 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.module.LibraryGlideModule;
 import com.example.medicacaocrianca.R;
+import com.example.medicacaocrianca.activity.TeacherHomeActivity;
 import com.example.medicacaocrianca.model.Children;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.bumptech.glide.annotation.GlideModule;
+import com.bumptech.glide.module.AppGlideModule;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -25,18 +32,22 @@ public class ChildAdapter extends RecyclerView.Adapter<ChildAdapter.MyViewHolder
 
     private List<Children> list;
     private Context context;
+    StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+    StorageReference images = storageReference.child("images");
+
 
     public ChildAdapter(Context context, List<Children> list) {
 
         this.list = list;
         this.context = context;
+
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View childrenList = LayoutInflater.from(parent.getContext()).inflate(R.layout.children_list_item, parent,false);
+        View childrenList = LayoutInflater.from(parent.getContext()).inflate(R.layout.children_list_item, parent, false);
         return new MyViewHolder(childrenList);
     }
 
@@ -50,11 +61,16 @@ public class ChildAdapter extends RecyclerView.Adapter<ChildAdapter.MyViewHolder
 
         Children children = list.get(position);
         holder.name.setText(children.getFullName());
-        Glide.with(context).load(children.getUri()).into(holder.picture);
+
+        StorageReference imageReference = images.child(children.getFullName() + ".jpg");
+
+        imageReference.getDownloadUrl().addOnSuccessListener(s -> {
+            Picasso.get().load(s).into(holder.picture);
+        });
 
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView name;
         ImageView picture;

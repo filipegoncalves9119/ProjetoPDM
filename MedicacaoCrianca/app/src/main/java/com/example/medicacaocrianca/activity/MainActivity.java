@@ -73,11 +73,11 @@ public class MainActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     if(email.equals("admin@gmail.com")){
-                        Toast.makeText(MainActivity.this,"Sucefully logged in as Admin",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this,"Successfully logged in as Admin",Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainActivity.this, AdminHomeActivity.class);
                         startActivity(intent);
                     }else {
-                        Toast.makeText(MainActivity.this,"Sucefully logged in",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this,"Successfully logged in",Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainActivity.this, TeacherHomeActivity.class);
                         startActivity(intent);
                     }

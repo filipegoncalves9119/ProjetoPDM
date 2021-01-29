@@ -15,9 +15,7 @@
         android:id="@+id/image_view_child_id"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        app:srcCompat="@android:mipmap/sym_def_app_icon" />
-
-
+         />
 
     <TextView
         android:id="@+id/child_name_text_id"
