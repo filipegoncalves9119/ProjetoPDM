@@ -24,6 +24,6 @@ public interface ChildrenDao {
     @Query("select * from children where id = :id")
     Children get(long id);
 
-    //@Query("select * from children where fullName = :name");
-    //Children get(String name);
+    @Query("select * from children where fullName = :fullName")
+    List<Children> get(String fullName);
 }

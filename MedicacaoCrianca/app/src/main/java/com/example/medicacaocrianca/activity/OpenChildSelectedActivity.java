@@ -44,7 +44,9 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
     private Button confirmBtn;
     private SelectedChildAdapter adapter;
     private RecyclerView recyclerView;
-    List<Children> list;
+    private List<Children> list;
+    private String name;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +62,12 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
         this.recyclerView = findViewById(R.id.selected_child_recycler_id);
 
         Intent intent = getIntent();
-        String name = intent.getStringExtra("name");
+        name = intent.getStringExtra("name");
         String picture = intent.getStringExtra("picture");
         displayName.setText(name);
         Picasso.get().load(picture).into(photo);
+
+
 
        selectTime.setOnClickListener(v -> {
            showTimePickerDialog(v);
@@ -119,18 +123,14 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-        if(list != null) {
-            adapter.notifyDataSetChanged();
-        }
         updateList();
-
         super.onStart();
     }
 
     private void updateList(){
         this.list = ChildrenDatabase.getInstance(getApplicationContext())
                 .childrenDao()
-                .getAll();
+                .get(name);
 
 
         this.adapter = new SelectedChildAdapter(this.getApplicationContext(), this.list);
@@ -139,7 +139,7 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayout.VERTICAL));
         recyclerView.setAdapter(this.adapter);
-
+        adapter.notifyDataSetChanged();
     }
 
     private void updateTime(Calendar calendar){
