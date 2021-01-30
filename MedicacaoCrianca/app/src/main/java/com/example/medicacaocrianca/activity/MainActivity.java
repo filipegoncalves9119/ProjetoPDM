@@ -59,11 +59,11 @@ public class MainActivity extends AppCompatActivity {
         String password = this.password.getText().toString();
 
         if(TextUtils.isEmpty(email)){
-            this.email.setError("Enter your e-mail");
+            this.email.setError(getString(R.string.enter_email));
             return;
         }
         else if(TextUtils.isEmpty(password)){
-            this.password.setError("Enter your password");
+            this.password.setError(getString(R.string.enter_password));
             return;
         }
 
@@ -73,16 +73,16 @@ public class MainActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     if(email.equals("admin@gmail.com")){
-                        Toast.makeText(MainActivity.this,"Successfully logged in as Admin",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.successAdmin) ,Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainActivity.this, AdminHomeActivity.class);
                         startActivity(intent);
                     }else {
-                        Toast.makeText(MainActivity.this,"Successfully logged in",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.succesLogin) ,Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainActivity.this, TeacherHomeActivity.class);
                         startActivity(intent);
                     }
                 }else{
-                    Toast.makeText(MainActivity.this,"E-mail or password incorrect!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, getString(R.string.incorrectData) ,Toast.LENGTH_SHORT).show();
                 }
             }
         });

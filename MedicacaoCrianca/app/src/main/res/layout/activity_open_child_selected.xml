@@ -40,7 +40,7 @@
             android:id="@+id/text_pill_id"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="Insert pill name">
+            android:hint="@string/insert_pill_name">
         </EditText>
     </RelativeLayout>
 
@@ -63,7 +63,7 @@
             android:layout_width="230dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:text="Select hours">
+            android:text="@string/select_hours">
 
         </Button>
 
@@ -78,7 +78,7 @@
             android:layout_width="230dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:text="Confirm"/>
+            android:text="@string/confirm"/>
     </RelativeLayout>
 
     <RelativeLayout

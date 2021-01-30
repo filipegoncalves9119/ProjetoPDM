@@ -177,7 +177,7 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
     }
 
     private void updateTime(Calendar calendar){
-        String time = "Alarm set for: ";
+        String time = getString(R.string.alarmSet);
         time += DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar);
     }
 

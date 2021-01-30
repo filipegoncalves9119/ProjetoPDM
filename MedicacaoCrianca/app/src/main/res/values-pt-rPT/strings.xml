@@ -25,6 +25,19 @@
     <string name="selectGallery">Selecionar da Galaria</string>
     <string name="pickChildren">Escolher a criança</string>
     <string name="pickRoom">Escolher a Sala</string>
+    <string name="alarmSet">\"Alarm selecionado para: \"</string>
+    <string name="successAdmin">Login efetuado com sucesso como administrador</string>
+    <string name="succesLogin">Login efetuado com sucesso</string>
+    <string name="incorrectData">E-mail ou password incorretos!</string>
+    <string name="enterName">Escreva o seu nome</string>
+    <string name="passMatch">A password não coincide</string>
+    <string name="passLength">O tamanho deve ser de 6 ou mais caracteres</string>
+    <string name="createdSucessTeacher">Professor criado com sucesso</string>
+    <string name="addRoomSuccess">Sala adicioando com sucesso!</string>
+    <string name="insert_pill_name">Insira o nome do medicamento</string>
+    <string name="select_hours">Selecione as horas</string>
+    <string name="select_from_gallery">Selecionar foto da galaria</string>
+
 
 
 

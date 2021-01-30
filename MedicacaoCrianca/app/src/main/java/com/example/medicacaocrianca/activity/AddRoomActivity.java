@@ -121,7 +121,7 @@ public class AddRoomActivity extends AppCompatActivity implements AdapterView.On
         db.collection("room").add(room).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
-                Toast.makeText(AddRoomActivity.this,"Room added successfully!", Toast.LENGTH_LONG).show();
+                Toast.makeText(AddRoomActivity.this, R.string.addRoomSuccess, Toast.LENGTH_LONG).show();
             }
         })  .addOnFailureListener(new OnFailureListener() {
             @Override

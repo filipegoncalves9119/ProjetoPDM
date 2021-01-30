@@ -82,24 +82,24 @@ public class AddTeacherActivity extends AppCompatActivity {
 
         // check for null fields
         if(TextUtils.isEmpty(mail)){
-            this.email.setError("Enter your e-mail");
+            this.email.setError(getString(R.string.enter_email));
             return;
         }
         else if(TextUtils.isEmpty(pass) || TextUtils.isEmpty(passConfirm)){
-            this.password.setError("Enter your password");
+            this.password.setError(getString(R.string.enter_password));
             return;
         }
         else if(TextUtils.isEmpty(name)){
-            this.fullName.setError("Enter you name");
+            this.fullName.setError(getString(R.string.enterName));
             return;
         }
         else if(!pass.equals(passConfirm)){
-            this.password.setError("Password doesn't match");
-            this.passwordConfirm.setError("Password doesn't match");
+            this.password.setError(getString(R.string.passMatch));
+            this.passwordConfirm.setError(getString(R.string.passMatch));
             return;
         }
         else if(pass.length() < 6){
-            this.password.setError("Length must be 6 or more characters");
+            this.password.setError(getString(R.string.passLength));
         }
 
         /*
@@ -115,7 +115,7 @@ public class AddTeacherActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     register();
-                    Toast.makeText(AddTeacherActivity.this, "Teacher created successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddTeacherActivity.this, getString(R.string.createdSucessTeacher) , Toast.LENGTH_SHORT).show();
                     Intent confirm = new Intent(AddTeacherActivity.this, AdminHomeActivity.class);
                     startActivity(confirm);
                 }

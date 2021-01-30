@@ -25,5 +25,17 @@
     <string name="selectGallery">Select from gallery</string>
     <string name="pickChildren">Pick a Children</string>
     <string name="pickRoom">Pick a room</string>
+    <string name="alarmSet">\"Alarm set for: \"</string>
+    <string name="successAdmin">Successfully logged in as Admin</string>
+    <string name="succesLogin">Successfully logged in</string>
+    <string name="incorrectData">E-mail or password incorrect!</string>
+    <string name="enterName">Enter you name</string>
+    <string name="passMatch">Password doesn\'t match</string>
+    <string name="passLength">Length must be 6 or more characters</string>
+    <string name="createdSucessTeacher">Teacher created successfully</string>
+    <string name="addRoomSuccess">Room added successfully!</string>
+    <string name="insert_pill_name">Insert pill name</string>
+    <string name="select_hours">Select hours</string>
+    <string name="select_from_gallery">Select from gallery</string>
 
 </resources>
