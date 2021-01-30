@@ -49,7 +49,6 @@ public class AddChildRoomActivity extends AppCompatActivity implements AdapterVi
     private String uri;
     FirebaseFirestore db;
     DatabaseReference referenceForUri;
-    List<String> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +62,7 @@ public class AddChildRoomActivity extends AppCompatActivity implements AdapterVi
         this.referenceForUri = FirebaseDatabase.getInstance().getReference();
 
 
-        //gets list of childrens in the database
+        //gets list of children from the database
         db.collection("children").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -71,7 +70,7 @@ public class AddChildRoomActivity extends AppCompatActivity implements AdapterVi
                 for (DocumentSnapshot documentSnapshot : task.getResult()) {
                     list.add(documentSnapshot.getString("fullName"));
                 }
-                //Creates the adapter and set it's values to the list created previously
+                //Creates the adapter and set it's values to the list created previously and fill the spinner with list of children names
                 ArrayAdapter names = new ArrayAdapter(AddChildRoomActivity.this, android.R.layout.simple_spinner_item, list);
                 names.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerNames.setAdapter(names);
@@ -83,7 +82,7 @@ public class AddChildRoomActivity extends AppCompatActivity implements AdapterVi
             }
         });
 
-        //get the rooms registed in the database
+        //get the rooms registered in the database
         db.collection("room").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -134,6 +133,12 @@ public class AddChildRoomActivity extends AppCompatActivity implements AdapterVi
 
     }
 
+
+    /**
+     * Method to regist a child
+     * gets the chose name and room
+     * creates an object of children and give the name and room as parameters and saves it in the firebase
+     */
     private void registerChildRoom() {
         String name = spinnerNames.getSelectedItem().toString();
 

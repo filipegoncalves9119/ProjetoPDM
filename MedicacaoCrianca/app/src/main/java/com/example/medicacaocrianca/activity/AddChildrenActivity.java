@@ -105,15 +105,20 @@ public class AddChildrenActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * Listener to call updaload to firebase
+         */
         this.confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 upLoadToFireBase();
-                //register(fullName.getText().toString(), address.getText().toString(), birthdate.getText().toString(), parent.getText().toString(), phoneNumber.getText().toString(), picture);
 
             }
         });
 
+        /**
+         *Listener to go back to home
+         */
         this.backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,6 +127,10 @@ public class AddChildrenActivity extends AppCompatActivity {
             }
         });
 
+
+        /**
+         * Listener to open gallery
+         */
         this.openGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,18 +155,11 @@ public class AddChildrenActivity extends AppCompatActivity {
 
         if (!name.equals("") && !address.equals("") && !birthdate.equals("") && !parent.equals("") && !phone.equals("")) {
             Children children = new Children(name, address, birthdate, parent, phone, uri);
-          db.collection("children").add(children).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-              @Override
-              public void onSuccess(DocumentReference documentReference) {
+          db.collection("children").add(children).addOnSuccessListener(documentReference -> {
 
-              }
-          })
-                  .addOnFailureListener(new OnFailureListener() {
-                      @Override
-                      public void onFailure(@NonNull Exception e) {
+          }).addOnFailureListener(e -> {
 
-                      }
-                  });
+          });
         }
     }
 
@@ -176,7 +178,6 @@ public class AddChildrenActivity extends AppCompatActivity {
      * Method used to place the taken picture into the imageview
      * Or choose between any photo in the phone's gallery
      * if the request code matches
-     *
      * @param requestCode
      * @param resultCode
      * @param data
@@ -185,7 +186,6 @@ public class AddChildrenActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CAMERA_CODE) {
-
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             this.picture.setImageBitmap(bitmap);
         }
@@ -223,13 +223,14 @@ public class AddChildrenActivity extends AppCompatActivity {
                 && !parent.getText().toString().equals("") && !phoneNumber.getText().toString().equals("") && picture.getDrawable() != null) {
 
             // Get the data from an ImageView as bytes
-            picture.setDrawingCacheEnabled(true);
-            picture.buildDrawingCache();
+            this.picture.setDrawingCacheEnabled(true);
+            this.picture.buildDrawingCache();
             Bitmap bitmap = ((BitmapDrawable) picture.getDrawable()).getBitmap();
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
             byte[] data = baos.toByteArray();
 
+            //upload the image to the storage database
             UploadTask uploadTask = storageReference.putBytes(data);
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override

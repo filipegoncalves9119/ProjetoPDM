@@ -55,8 +55,8 @@ public class TeacherHomeActivity extends AppCompatActivity {
         this.user = FirebaseAuth.getInstance().getCurrentUser();
         this.recyclerView = findViewById(R.id.recycler_view);
 
+        //method to get the user information and display on the view
         setCurrentUserInfo();
-
 
     }
 
@@ -70,7 +70,6 @@ public class TeacherHomeActivity extends AppCompatActivity {
 
     /**
      * Method to return e-mail
-     *
      * @return authenticated email user
      */
     private String getUserEmail() {
@@ -80,7 +79,6 @@ public class TeacherHomeActivity extends AppCompatActivity {
 
     /**
      * Method to initialize the adapter passing the context and the list of childrens
-     *
      */
     public void loadChildren() {
 
@@ -115,12 +113,10 @@ public class TeacherHomeActivity extends AppCompatActivity {
               this.number = task1.getResult().getDocuments().get(0).getDouble("number").intValue();
                 String num = number+"";
                 roomNumber.setText(num);
-
             });
             return db.collection("room").whereEqualTo("number",this.number).get();
 
         }).addOnCompleteListener(task -> {
-
             db.collection("childroom").whereEqualTo("roomNumber",this.number).get().addOnCompleteListener(task12 -> {
                 for(DocumentSnapshot documentSnapshot : task12.getResult()){
                     Children children = new Children();

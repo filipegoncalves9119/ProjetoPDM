@@ -1,6 +1,7 @@
 package com.example.medicacaocrianca.database;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
@@ -20,6 +21,9 @@ public interface ChildrenDao {
 
     @Update
     void update(Children update);
+
+    @Delete
+    void deletee(Children children);
 
     @Query("select * from children where id = :id")
     Children get(long id);

@@ -1,6 +1,7 @@
 package com.example.medicacaocrianca.model;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.text.DateFormat;
@@ -28,6 +29,7 @@ public class Children {
      * @param phoneNumber
      * @param parent
      */
+    @Ignore
     public Children(String fullName, String address, String birthDate, String phoneNumber, String parent, String uri) {
         this.fullName = fullName;
         this.address = address;

@@ -63,7 +63,6 @@ public class AddRoomActivity extends AppCompatActivity implements AdapterView.On
         this.firebase = FirebaseAuth.getInstance();
 
         //Retrieves all the names from the "Teacher" collection and add them to a list to be shown in the spinner
-
         db.collection("teacher").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -72,6 +71,7 @@ public class AddRoomActivity extends AppCompatActivity implements AdapterView.On
                     for(QueryDocumentSnapshot document : task.getResult()) {
                         list.add(document.getString("name"));
                     }
+                    //adapter used to fill the spinner with a list of teacher names
                     ArrayAdapter arrayAdapter = new ArrayAdapter(AddRoomActivity.this,android.R.layout.simple_spinner_item, list);
                     arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spin.setAdapter(arrayAdapter);
@@ -96,6 +96,9 @@ public class AddRoomActivity extends AppCompatActivity implements AdapterView.On
             }
         });
 
+        /**
+         * Listener to go back home activity
+         */
         this.backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

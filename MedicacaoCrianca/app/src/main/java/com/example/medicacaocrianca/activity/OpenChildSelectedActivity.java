@@ -38,10 +38,10 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
 
     private TextView displayName;
     static TextView displayTime;
-    private TextView displayPill;
+    static TextView displayPill;
     private Button selectTime;
     private ImageView photo;
-    private Button confirmBtn;
+    static Button confirmBtn;
     private SelectedChildAdapter adapter;
     private RecyclerView recyclerView;
     private List<Children> list;
@@ -60,27 +60,28 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
         this.confirmBtn = findViewById(R.id.confirm_btn_children_add_pill);
         this.displayPill = findViewById(R.id.text_pill_id);
         this.recyclerView = findViewById(R.id.selected_child_recycler_id);
-
+        this.confirmBtn.setEnabled(false);
         Intent intent = getIntent();
-        name = intent.getStringExtra("name");
+        this.name = intent.getStringExtra("name");
         String picture = intent.getStringExtra("picture");
-        displayName.setText(name);
-        Picasso.get().load(picture).into(photo);
+        this.displayName.setText(this.name);
+        //loads picture
 
+        Picasso.get().load(picture).into(this.photo);
 
-
+        //calls for time picker
        selectTime.setOnClickListener(v -> {
            showTimePickerDialog(v);
-
        });
 
+       //Listener for the confirmation button, adds a new children to the Room database.
        confirmBtn.setOnClickListener(v -> {
            String pill = displayPill.getText().toString();
            String timer = displayTime.getText().toString();
 
            Children children = new Children();
            children.setId(0);
-           children.setFullName(name);
+           children.setFullName(this.name);
            children.setTime(timer);
            children.setPills(pill);
 
@@ -90,6 +91,11 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
 
     }
 
+
+    /**
+     * time picker fragment
+     * @param v
+     */
     public void showTimePickerDialog(View v) {
         DialogFragment newFragment = new TimePickerFragment();
         newFragment.show(getSupportFragmentManager(), "timePicker");
@@ -114,32 +120,60 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
             return new TimePickerDialog(getActivity(), this, hour, minute,true);
         }
 
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            displayTime.setText(hourOfDay +":"+minute);
 
+        /**
+         * Method to set the time on the views
+         *
+         * @param view view
+         * @param hourOfDay hours number
+         * @param minute minutes number
+         */
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            String hour ="";
+            String min ="";
+            if(hourOfDay < 10 ){
+                hour =  0+""+hourOfDay;
+            }else{
+                hour = hourOfDay+"";
+            }
+            if(minute < 10){
+                min = ""+0+minute;
+            }else
+            {
+                min = minute+"";
+            }
+
+            displayTime.setText(hour +":"+min);
+
+            if(displayTime != null && !displayPill.getText().equals("")){
+                confirmBtn.setEnabled(true);
+            }
         }
     }
 
-
+    /**
+     * calls for update list method
+     */
     @Override
     protected void onStart() {
         updateList();
         super.onStart();
     }
 
+    /**
+     * Method to set list with the children
+     * set up adapter and recycler view
+     */
     private void updateList(){
-        this.list = ChildrenDatabase.getInstance(getApplicationContext())
-                .childrenDao()
-                .get(name);
-
+        this.list = ChildrenDatabase.getInstance(getApplicationContext()).childrenDao().get(this.name);
 
         this.adapter = new SelectedChildAdapter(this.getApplicationContext(), this.list);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayout.VERTICAL));
-        recyclerView.setAdapter(this.adapter);
-        adapter.notifyDataSetChanged();
+        this.recyclerView.setLayoutManager(layoutManager);
+        this.recyclerView.setHasFixedSize(true);
+        this.recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayout.VERTICAL));
+        this.recyclerView.setAdapter(this.adapter);
+        this.adapter.notifyDataSetChanged();
     }
 
     private void updateTime(Calendar calendar){

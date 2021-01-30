@@ -1,16 +1,16 @@
 package com.example.medicacaocrianca.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.medicacaocrianca.R;
+import com.example.medicacaocrianca.database.ChildrenDatabase;
 import com.example.medicacaocrianca.model.Children;
 
 import java.util.List;
@@ -23,6 +23,8 @@ public class SelectedChildAdapter extends RecyclerView.Adapter<SelectedChildAdap
     public SelectedChildAdapter(Context context, List<Children> list){
         this.context = context;
         this.list = list;
+
+
     }
 
     @NonNull
@@ -40,6 +42,14 @@ public class SelectedChildAdapter extends RecyclerView.Adapter<SelectedChildAdap
 
         holder.pillName.setText(pills);
         holder.time.setText(time);
+
+        // Listener to delete pressed item from recycler view
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                delete(position);
+            }
+        });
     }
 
     @Override
@@ -54,13 +64,19 @@ public class SelectedChildAdapter extends RecyclerView.Adapter<SelectedChildAdap
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-
             pillName = itemView.findViewById(R.id.pill_recycler_id);
             time = itemView.findViewById(R.id.timer_recycler_id);
 
-
-
         }
+    }
+
+    /**
+     * Method to delete item from recycler view
+     * @param position
+     */
+    private void delete(int position){
+       Children children = this.list.get(position);
+       ChildrenDatabase.getInstance(context).childrenDao().deletee(children);
     }
 
 

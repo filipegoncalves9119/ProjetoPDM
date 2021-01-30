@@ -69,16 +69,18 @@ public class AddTeacherActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Method to register a user to authentication database
+     * checks for null fields and set error message if find any
+     * if successfully regist a user calls for register method
+     */
     private void registerToAuth(){
         String mail = email.getText().toString();
         String pass = password.getText().toString();
         String passConfirm = passwordConfirm.getText().toString();
         String name = fullName.getText().toString();
 
-
-
-
+        // check for null fields
         if(TextUtils.isEmpty(mail)){
             this.email.setError("Enter your e-mail");
             return;
@@ -99,13 +101,15 @@ public class AddTeacherActivity extends AppCompatActivity {
         else if(pass.length() < 6){
             this.password.setError("Length must be 6 or more characters");
         }
+
         /*
         else if(isValidEmail(mail)){
             this.email.setError("Invalid e-mail");
             return;
         }
-*/
-        //mudar
+        */
+
+        //creates user in authentication database
         firebase.createUserWithEmailAndPassword(mail,passConfirm).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -124,6 +128,9 @@ public class AddTeacherActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Method to add a teacher to Cloud firebase
+     */
     private void register(){
 
         Teacher teacher = new Teacher(this.fullName.getText().toString(), this.email.getText().toString());

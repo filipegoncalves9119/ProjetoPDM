@@ -25,6 +25,11 @@ public class AdminHomeActivity extends AppCompatActivity {
         btnAddTeacher = findViewById(R.id.addTeacher_btn_id);
         btnAddChildRoom = findViewById(R.id.addChildren_to_room_btn_id);
 
+
+
+        /**
+         * Listener to call add children activity
+         */
         btnAddChildren.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -33,6 +38,9 @@ public class AdminHomeActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * Listener to call add room activity
+         */
         btnAddRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -41,6 +49,9 @@ public class AdminHomeActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * Listener to call add teacher activity
+         */
         btnAddTeacher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,6 +60,9 @@ public class AdminHomeActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * Listener to call add children room activity
+         */
         btnAddChildRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
