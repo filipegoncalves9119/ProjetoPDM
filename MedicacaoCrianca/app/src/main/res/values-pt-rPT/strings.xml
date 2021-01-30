@@ -4,7 +4,7 @@
     <string name="enter_email">Digite o seu e-mail</string>
     <string name="enter_password">Digite a sua password</string>
     <string name="welcome_teacher">Bem-vindo,</string>
-    <string name="teacher_home">Página Inicial do Professor</string>
+    <string name="teacher_home">Página Inicial</string>
     <string name="room">Sala: </string>
     <string name="admin_area">Área de Administrador</string>
     <string name="add_children">Adicionar Criança</string>
@@ -19,10 +19,9 @@
     <string name="room_number">Número da Sala</string>
     <string name="address">Morada</string>
     <string name="birthDate">Data de Nascimento(ex.: 20/11/2016)</string>
-    <string name="parent_name">Responsible parent name</string>
+    <string name="parent_name">Nome do encarregado de educação</string>
     <string name="phoneNumber">Número de telefone</string>
-    <string name="takePicture">Tirar Fotografiae</string>
-    <string name="selectGallery">Selecionar da Galaria</string>
+    <string name="takePicture">Tirar Fotografia</string>
     <string name="pickChildren">Escolher a criança</string>
     <string name="pickRoom">Escolher a Sala</string>
     <string name="alarmSet">\"Alarm selecionado para: \"</string>
@@ -36,9 +35,17 @@
     <string name="addRoomSuccess">Sala adicioando com sucesso!</string>
     <string name="insert_pill_name">Insira o nome do medicamento</string>
     <string name="select_hours">Selecione as horas</string>
-    <string name="select_from_gallery">Selecionar foto da galaria</string>
+    <string name="select_from_gallery">Selecionar da galaria</string>
     <string name="select_a_room">Selecionar sala</string>
-
+    <string name="enter_name">Digite o nome</string>
+    <string name="enter_address">Digite a morada</string>
+    <string name="enter_birth_date">Digite a data de nascimento</string>
+    <string name="enter_responsible_parent">Digite o encarregado de educação</string>
+    <string name="enter_phone_number">Digite o número de telefone</string>
+    <string name="children_add_sucess">Criança adicionda com sucesso</string>
+    <string name="edit_or_delete">Editar ou apagar</string>
+    <string name="delete">Apagar</string>
+    <string name="update">Submeter</string>
 
 
 </resources>

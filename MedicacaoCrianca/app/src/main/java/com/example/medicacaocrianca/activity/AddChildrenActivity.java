@@ -208,15 +208,15 @@ public class AddChildrenActivity extends AppCompatActivity {
         StorageReference storageReference = databaseReference.child("images/" + this.fullName.getText().toString() + ".jpg");
 
         if (TextUtils.isEmpty(fullName.getText().toString())) {
-            fullName.setError("Enter a name");
+            fullName.setError(getString(R.string.enter_name));
         } else if (TextUtils.isEmpty(address.getText().toString())) {
-            address.setError("Enter an address");
+            address.setError(getString(R.string.enter_address));
         } else if (TextUtils.isEmpty(birthdate.getText().toString())) {
-            birthdate.setError("Enter a birth date");
+            birthdate.setError(getString(R.string.enter_birth_date));
         } else if (TextUtils.isEmpty(parent.getText().toString())) {
-            parent.setError("Enter the responsible parent");
+            parent.setError(getString(R.string.enter_responsible_parent));
         } else if (TextUtils.isEmpty(phoneNumber.getText().toString())) {
-            phoneNumber.setError("Enter phone number");
+            phoneNumber.setError(getString(R.string.enter_phone_number));
         }
 
         //prevents from null data to go into database
@@ -246,7 +246,7 @@ public class AddChildrenActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Uri> task) {
                             //on success image sent to data base storage creates new children with given information
                             addChildren(fullName.getText().toString(), address.getText().toString(), birthdate.getText().toString(), phoneNumber.getText().toString(), parent.getText().toString(), task.toString());
-                            Toast.makeText(AddChildrenActivity.this, "Children added sucessfuly", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddChildrenActivity.this, getString(R.string.children_add_sucess), Toast.LENGTH_SHORT).show();
                             //Intent backHome = new Intent(AddChildrenActivity.this, AdminHomeActivity.class);
                             //startActivity(backHome);
                             finish();

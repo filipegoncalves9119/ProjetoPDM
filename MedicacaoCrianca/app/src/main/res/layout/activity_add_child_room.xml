@@ -57,7 +57,7 @@
             android:textAlignment="center"
             android:gravity="center"
             android:background="@color/white"
-            android:text="@string/pickChildren"
+            android:text="@string/select_a_room"
             android:textColor="@color/black" />
 
         <Spinner

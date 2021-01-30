@@ -4,7 +4,7 @@
     <string name="enter_email">Enter your e-mail</string>
     <string name="enter_password">Enter your password</string>
     <string name="welcome_teacher">Welcome,</string>
-    <string name="teacher_home">Home Page Teacher</string>
+    <string name="teacher_home">Home Page</string>
     <string name="room">Room: </string>
     <string name="admin_area">Administrator Area</string>
     <string name="add_children">Add Children</string>
@@ -22,7 +22,6 @@
     <string name="parent_name">Responsible parent name</string>
     <string name="phoneNumber">Phone Number</string>
     <string name="takePicture">Take picture</string>
-    <string name="selectGallery">Select from gallery</string>
     <string name="pickChildren">Select a Children</string>
     <string name="pickRoom">Pick a room</string>
     <string name="alarmSet">\"Alarm set for: \"</string>
@@ -38,5 +37,15 @@
     <string name="select_hours">Select hours</string>
     <string name="select_from_gallery">Select from gallery</string>
     <string name="select_a_room">Select a room</string>
+    <string name="enter_name">Enter a name</string>
+    <string name="enter_address">Enter an address</string>
+    <string name="enter_birth_date">Enter a birth date</string>
+    <string name="enter_responsible_parent">Enter the responsible parent</string>
+    <string name="enter_phone_number">Enter phone number</string>
+    <string name="children_add_sucess">Children added sucessfuly</string>
+    <string name="edit_or_delete">Edit or delete</string>
+    <string name="delete">Delete</string>
+    <string name="update">Update</string>
+
 
 </resources>

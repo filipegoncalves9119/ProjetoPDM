@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="Edit or delete"
+        android:text="@string/edit_or_delete"
         android:textSize="25dp"
         android:textAlignment="center"/>
     <RelativeLayout
@@ -44,7 +44,7 @@
         android:layout_width="150dp"
         android:layout_height="50dp"
 
-        android:text="Delete">
+        android:text="@string/delete">
 
     </Button>
 
@@ -52,7 +52,7 @@
         android:id="@+id/update_children_id"
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:text="Update"
+        android:text="@string/update"
         />
 
 </LinearLayout>
