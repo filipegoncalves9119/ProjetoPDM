@@ -23,7 +23,7 @@
     <string name="phoneNumber">Phone Number</string>
     <string name="takePicture">Take picture</string>
     <string name="selectGallery">Select from gallery</string>
-    <string name="pickChildren">Pick a Children</string>
+    <string name="pickChildren">Select a Children</string>
     <string name="pickRoom">Pick a room</string>
     <string name="alarmSet">\"Alarm set for: \"</string>
     <string name="successAdmin">Successfully logged in as Admin</string>
@@ -37,5 +37,6 @@
     <string name="insert_pill_name">Insert pill name</string>
     <string name="select_hours">Select hours</string>
     <string name="select_from_gallery">Select from gallery</string>
+    <string name="select_a_room">Select a room</string>
 
 </resources>

@@ -122,8 +122,9 @@ public class AddChildrenActivity extends AppCompatActivity {
         this.backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent backHome = new Intent(AddChildrenActivity.this, AdminHomeActivity.class);
-                startActivity(backHome);
+                //Intent backHome = new Intent(AddChildrenActivity.this, AdminHomeActivity.class);
+                //startActivity(backHome);
+                finish();
             }
         });
 
@@ -246,9 +247,9 @@ public class AddChildrenActivity extends AppCompatActivity {
                             //on success image sent to data base storage creates new children with given information
                             addChildren(fullName.getText().toString(), address.getText().toString(), birthdate.getText().toString(), phoneNumber.getText().toString(), parent.getText().toString(), task.toString());
                             Toast.makeText(AddChildrenActivity.this, "Children added sucessfuly", Toast.LENGTH_SHORT).show();
-                            Intent backHome = new Intent(AddChildrenActivity.this, AdminHomeActivity.class);
-                            startActivity(backHome);
-
+                            //Intent backHome = new Intent(AddChildrenActivity.this, AdminHomeActivity.class);
+                            //startActivity(backHome);
+                            finish();
                         }
                     });
                 }

@@ -4,10 +4,11 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 
 @Entity
-public class Children {
+public class Children implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private  long id;

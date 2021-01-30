@@ -77,6 +77,7 @@ public class ChildAdapter extends RecyclerView.Adapter<ChildAdapter.MyViewHolder
             Intent intent = new Intent(context, OpenChildSelectedActivity.class);
             intent.putExtra("name", children.getFullName());
             intent.putExtra("picture", nameToSave);
+
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             holder.itemView.getContext().startActivity(intent);

@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicacaoCrianca">
-        <activity android:name=".activity.OpenChildSelectedActivity"></activity>
+        <activity android:name=".activity.ChangeOrDeleteActivity"></activity>
+        <activity android:name=".activity.OpenChildSelectedActivity" />
         <activity android:name=".activity.AddChildRoomActivity" />
         <activity android:name=".activity.TeacherHomeActivity" />
         <activity android:name=".activity.AddTeacherActivity" />

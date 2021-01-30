@@ -107,16 +107,18 @@ public class AddChildRoomActivity extends AppCompatActivity implements AdapterVi
             @Override
             public void onClick(View v) {
                 registerChildRoom();
-                Intent backHome = new Intent(AddChildRoomActivity.this, AdminHomeActivity.class);
-                startActivity(backHome);
+                //Intent backHome = new Intent(AddChildRoomActivity.this, AdminHomeActivity.class);
+                //startActivity(backHome);
+                finish();
             }
         });
 
         this.backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent backHome = new Intent(AddChildRoomActivity.this, AdminHomeActivity.class);
-                startActivity(backHome);
+                //Intent backHome = new Intent(AddChildRoomActivity.this, AdminHomeActivity.class);
+                //startActivity(backHome);
+                finish();
             }
         });
 

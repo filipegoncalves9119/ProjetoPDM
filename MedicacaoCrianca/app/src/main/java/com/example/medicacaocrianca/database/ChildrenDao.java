@@ -23,7 +23,7 @@ public interface ChildrenDao {
     void update(Children update);
 
     @Delete
-    void deletee(Children children);
+    void delete(Children children);
 
     @Query("select * from children where id = :id")
     Children get(long id);

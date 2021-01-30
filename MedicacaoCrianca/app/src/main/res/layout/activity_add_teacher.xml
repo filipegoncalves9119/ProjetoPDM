@@ -20,7 +20,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="70dp">
 
         <EditText
             android:id="@+id/teacher_name_text_id"
@@ -36,7 +36,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="70dp">
 
         <EditText
             android:id="@+id/teacher_email_text_id"
@@ -52,7 +52,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="70dp">
 
         <EditText
             android:id="@+id/teacher_password_text_id"

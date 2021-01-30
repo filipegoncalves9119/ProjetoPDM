@@ -46,6 +46,8 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<Children> list;
     private String name;
+    private String picture;
+    private Bundle extras;
 
 
     @Override
@@ -61,12 +63,15 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
         this.displayPill = findViewById(R.id.text_pill_id);
         this.recyclerView = findViewById(R.id.selected_child_recycler_id);
         this.confirmBtn.setEnabled(false);
-        Intent intent = getIntent();
-        this.name = intent.getStringExtra("name");
-        String picture = intent.getStringExtra("picture");
-        this.displayName.setText(this.name);
-        //loads picture
+        this.extras = getIntent().getExtras();
 
+
+        this.name = extras.getString("name");
+        this.picture = extras.getString("picture");
+
+        this.displayName.setText(this.name);
+
+        //loads picture
         Picasso.get().load(picture).into(this.photo);
 
         //calls for time picker
@@ -156,9 +161,11 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
      */
     @Override
     protected void onStart() {
+        Picasso.get().load(picture).into(this.photo);
         updateList();
         super.onStart();
     }
+
 
     /**
      * Method to set list with the children
@@ -173,6 +180,7 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
         this.recyclerView.setHasFixedSize(true);
         this.recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayout.VERTICAL));
         this.recyclerView.setAdapter(this.adapter);
+        Picasso.get().load(picture).into(this.photo);
         this.adapter.notifyDataSetChanged();
     }
 

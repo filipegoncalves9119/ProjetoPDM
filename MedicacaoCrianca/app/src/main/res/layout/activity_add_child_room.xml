@@ -4,55 +4,72 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#17A9BC"
     android:gravity="center"
     android:orientation="vertical"
     android:paddingHorizontal="30dp"
-    android:background="#17A9BC"
     tools:context=".activity.AdminHomeActivity">
 
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:text="@string/add_chil_to_room"
-    android:textColor="#ffffff"
-    android:textSize="36dp"
-    />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="@string/add_chil_to_room"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:textSize="36dp" />
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp">
+        android:layout_height="120dp">
+
         <TextView
             android:id="@+id/textView_name_id"
             android:layout_width="match_parent"
-            android:background="@color/card_color"
-            android:textColor="@color/black"
+            android:layout_height="50dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:background="@color/white"
+            android:text="@string/pickChildren"
+            android:textColor="@color/black" />
+
+        <Spinner
+            android:id="@+id/spinner_name_id"
+            android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:text="@string/pickChildren"/>
-    <Spinner
-        android:id="@+id/spinner_name_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView_name_id"/>
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_marginTop="60dp"
+            android:paddingEnd="10dp"
+            android:background="@color/white" />
 
 
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/aaaaa"
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="150dp">
+
         <TextView
             android:id="@+id/textView_room_id"
             android:layout_width="match_parent"
-            android:background="@color/card_color"
-            android:textColor="@color/black"
-            android:layout_height="40dp"
-            android:layout_alignBottom="@+id/spinner_room_id"
-            android:text="Pick a room"/>
+            android:layout_height="50dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:background="@color/white"
+            android:text="@string/pickChildren"
+            android:textColor="@color/black" />
 
-    <Spinner
-        android:id="@+id/spinner_room_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"/>
+        <Spinner
+            android:id="@+id/spinner_room_id"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_marginTop="60dp"
+            android:paddingEnd="10dp"
+            android:background="@color/white"  />
+
     </RelativeLayout>
 
 
@@ -65,17 +82,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="40dp"
             android:layout_marginStart="30dp"
-            android:text="@string/back"/>
+            android:layout_marginTop="40dp"
+            android:text="@string/back" />
 
         <Button
             android:id="@+id/save_btn_idd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="30dp"
             android:layout_marginTop="40dp"
+            android:layout_marginEnd="30dp"
             android:text="@string/confirm" />
 
     </RelativeLayout>

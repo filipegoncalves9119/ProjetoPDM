@@ -93,6 +93,7 @@ public class AddRoomActivity extends AppCompatActivity implements AdapterView.On
             @Override
             public void onClick(View v) {
                 register();
+                finish();
             }
         });
 
@@ -102,8 +103,9 @@ public class AddRoomActivity extends AppCompatActivity implements AdapterView.On
         this.backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent backHomeBtn = new Intent(AddRoomActivity.this, AdminHomeActivity.class);
-                startActivity(backHomeBtn);
+               // Intent backHomeBtn = new Intent(AddRoomActivity.this, AdminHomeActivity.class);
+                //startActivity(backHomeBtn);
+                finish();
             }
         });
 

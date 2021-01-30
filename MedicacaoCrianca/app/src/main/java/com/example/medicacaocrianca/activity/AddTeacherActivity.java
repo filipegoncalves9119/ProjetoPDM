@@ -55,8 +55,9 @@ public class AddTeacherActivity extends AppCompatActivity {
         this.backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent backHome = new Intent(AddTeacherActivity.this, AdminHomeActivity.class);
-                startActivity(backHome);
+               // Intent backHome = new Intent(AddTeacherActivity.this, AdminHomeActivity.class);
+               // startActivity(backHome);
+                finish();
             }
         });
 
@@ -64,6 +65,7 @@ public class AddTeacherActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 registerToAuth();
+                finish();
             }
         });
     }
@@ -116,8 +118,9 @@ public class AddTeacherActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
                     register();
                     Toast.makeText(AddTeacherActivity.this, getString(R.string.createdSucessTeacher) , Toast.LENGTH_SHORT).show();
-                    Intent confirm = new Intent(AddTeacherActivity.this, AdminHomeActivity.class);
-                    startActivity(confirm);
+                    //Intent confirm = new Intent(AddTeacherActivity.this, AdminHomeActivity.class);
+                    //startActivity(confirm);
+                    finish();
                 }
             }
         });

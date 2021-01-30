@@ -76,10 +76,12 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, getString(R.string.successAdmin) ,Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainActivity.this, AdminHomeActivity.class);
                         startActivity(intent);
+                        finish();
                     }else {
                         Toast.makeText(MainActivity.this, getString(R.string.succesLogin) ,Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainActivity.this, TeacherHomeActivity.class);
                         startActivity(intent);
+                        finish();
                     }
                 }else{
                     Toast.makeText(MainActivity.this, getString(R.string.incorrectData) ,Toast.LENGTH_SHORT).show();
