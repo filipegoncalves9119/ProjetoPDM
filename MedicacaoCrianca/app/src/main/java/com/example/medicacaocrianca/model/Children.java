@@ -1,6 +1,15 @@
 package com.example.medicacaocrianca.model;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import java.text.DateFormat;
+
+@Entity
 public class Children {
+
+    @PrimaryKey(autoGenerate = true)
+    private  long id;
 
     private String fullName;
     private String address;
@@ -8,6 +17,8 @@ public class Children {
     private String phoneNumber;
     private String parent;
     private String uri;
+    private String pills;
+    private String date;
 
     /**
      * Class constructor
@@ -80,5 +91,29 @@ public class Children {
 
     public void setUri(String uri) {
         this.uri = uri;
+    }
+
+    public String getPills() {
+        return pills;
+    }
+
+    public void setPills(String pills) {
+        this.pills = pills;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }
