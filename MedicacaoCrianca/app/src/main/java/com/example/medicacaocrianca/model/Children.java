@@ -18,7 +18,7 @@ public class Children {
     private String parent;
     private String uri;
     private String pills;
-    private String date;
+    private String time;
 
     /**
      * Class constructor
@@ -47,38 +47,49 @@ public class Children {
 
 
     //Getters and setters
-    public String getFullName() { return fullName;
-    }
-    public String getAddress() {
-        return address;
+
+    public long getId() {
+        return id;
     }
 
-    public String getBirthDate() {
-        return birthDate;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public String getParent() {
-        return parent;
+    public String getFullName() {
+        return fullName;
     }
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
     }
 
     public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getParent() {
+        return parent;
     }
 
     public void setParent(String parent) {
@@ -101,19 +112,11 @@ public class Children {
         this.pills = pills;
     }
 
-    public String getDate() {
-        return date;
+    public String getTime() {
+        return time;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+    public void setTime(String time) {
+        this.time = time;
     }
 }

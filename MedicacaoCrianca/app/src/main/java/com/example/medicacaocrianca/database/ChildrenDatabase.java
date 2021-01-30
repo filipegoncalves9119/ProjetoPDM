@@ -10,7 +10,7 @@ import androidx.room.RoomDatabase;
 
 import com.example.medicacaocrianca.model.Children;
 
-@Database(entities = {Children.class}, version = 1, exportSchema = false)
+@Database(entities = {Children.class}, version = 2, exportSchema = false)
 public abstract class ChildrenDatabase extends RoomDatabase {
 
     private static ChildrenDatabase instance;

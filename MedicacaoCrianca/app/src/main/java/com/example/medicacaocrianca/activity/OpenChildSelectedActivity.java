@@ -1,6 +1,9 @@
 package com.example.medicacaocrianca.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlarmManager;
 import android.app.Dialog;
@@ -14,10 +17,13 @@ import android.view.View;
 import android.widget.Button;
 
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.example.medicacaocrianca.R;
+import com.example.medicacaocrianca.adapter.ChildAdapter;
+import com.example.medicacaocrianca.adapter.SelectedChildAdapter;
 import com.example.medicacaocrianca.database.ChildrenDatabase;
 import com.example.medicacaocrianca.model.Children;
 
@@ -25,6 +31,7 @@ import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 
 public class OpenChildSelectedActivity extends AppCompatActivity {
@@ -35,7 +42,9 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
     private Button selectTime;
     private ImageView photo;
     private Button confirmBtn;
-
+    private SelectedChildAdapter adapter;
+    private RecyclerView recyclerView;
+    List<Children> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +57,7 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
         this.photo = findViewById(R.id.image_for_pic);
         this.confirmBtn = findViewById(R.id.confirm_btn_children_add_pill);
         this.displayPill = findViewById(R.id.text_pill_id);
+        this.recyclerView = findViewById(R.id.selected_child_recycler_id);
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
@@ -67,7 +77,7 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
            Children children = new Children();
            children.setId(0);
            children.setFullName(name);
-           children.setDate(timer);
+           children.setTime(timer);
            children.setPills(pill);
 
            ChildrenDatabase.getInstance(getApplicationContext()).childrenDao().inset(children);
@@ -75,8 +85,6 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
        });
 
     }
-
-
 
     public void showTimePickerDialog(View v) {
         DialogFragment newFragment = new TimePickerFragment();
@@ -106,6 +114,32 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
             displayTime.setText(hourOfDay +":"+minute);
 
         }
+    }
+
+
+    @Override
+    protected void onStart() {
+        if(list != null) {
+            adapter.notifyDataSetChanged();
+        }
+        updateList();
+
+        super.onStart();
+    }
+
+    private void updateList(){
+        this.list = ChildrenDatabase.getInstance(getApplicationContext())
+                .childrenDao()
+                .getAll();
+
+
+        this.adapter = new SelectedChildAdapter(this.getApplicationContext(), this.list);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayout.VERTICAL));
+        recyclerView.setAdapter(this.adapter);
+
     }
 
     private void updateTime(Calendar calendar){
