@@ -1,32 +1,36 @@
 package com.example.medicacaocrianca.activity;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.app.AlarmManager;
 import android.app.Dialog;
-
 import android.app.TimePickerDialog;
-
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.medicacaocrianca.R;
-import com.example.medicacaocrianca.adapter.ChildAdapter;
+
 import com.example.medicacaocrianca.adapter.SelectedChildAdapter;
 import com.example.medicacaocrianca.database.ChildrenDatabase;
 import com.example.medicacaocrianca.model.Children;
-
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
@@ -39,22 +43,29 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
     private TextView displayName;
     static TextView displayTime;
     static TextView displayPill;
-    private Button selectTime;
+    static Button selectTime;
+    private Button makeCall;
     private ImageView photo;
     static Button confirmBtn;
+    private Button backActivity;
     private SelectedChildAdapter adapter;
     private RecyclerView recyclerView;
     private List<Children> list;
     private String name;
     private String picture;
-    private Bundle extras;
+    String number1;
 
+    StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+    StorageReference images = storageReference.child("images");
+
+    private static final int REQUEST_PHONE_CALL_CODE = 1100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_child_selected);
 
+        this.makeCall = findViewById(R.id.call_btn_id);
         this.displayName = findViewById(R.id.child_name_id);
         this.selectTime = findViewById(R.id.select_hours_id);
         displayTime = findViewById(R.id.text_display_hours_id);
@@ -62,17 +73,51 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
         this.confirmBtn = findViewById(R.id.confirm_btn_children_add_pill);
         this.displayPill = findViewById(R.id.text_pill_id);
         this.recyclerView = findViewById(R.id.selected_child_recycler_id);
+        this.backActivity = findViewById(R.id.back_home_id);
         this.confirmBtn.setEnabled(false);
-        this.extras = getIntent().getExtras();
+        Intent extras = getIntent();
+        this.name = extras.getStringExtra("name");
+        this.picture = extras.getStringExtra("picture");
+
+        this.displayName.setText(name);
+       // Log.d("imagem", picture);
+        //Permission to use the phone calls
+        if (ContextCompat.checkSelfPermission(OpenChildSelectedActivity.this, Manifest.permission.CALL_PHONE) !=
+                PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(OpenChildSelectedActivity.this, new String[]{
+                    Manifest.permission.CALL_PHONE}, REQUEST_PHONE_CALL_CODE);
+
+            //Listener to call for phone call
+            makeCall.setOnClickListener(v -> {
+                number1 = extras.getStringExtra("phone");
+                if(number1.isEmpty()){
+                    Toast.makeText(getApplicationContext(),"No number to call to", Toast.LENGTH_LONG).show();
+                }else{
+
+                    Intent callIntent = new Intent(Intent.ACTION_CALL);
+                    callIntent.setData(Uri.parse("tel:+351"+number1));
+                    startActivity(callIntent);
+
+                }
+            });
 
 
-        this.name = extras.getString("name");
-        this.picture = extras.getString("picture");
+        }
+        backActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
-        this.displayName.setText(this.name);
+        StorageReference imageReference = images.child(name + ".jpg");
+        imageReference.getDownloadUrl().addOnSuccessListener(s -> {
+            Picasso.get().load(s).into(photo);
+        });
+
 
         //loads picture
-        Picasso.get().load(picture).into(this.photo);
+        //Picasso.get().load(picture).into(this.photo);
 
         //calls for time picker
        selectTime.setOnClickListener(v -> {
@@ -121,7 +166,7 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
             int hour = c.get(Calendar.HOUR_OF_DAY);
             int minute = c.get(Calendar.MINUTE);
 
-            // Create a new instance of TimePickerDialog and return it
+            // return an instance of TimePickerDialog
             return new TimePickerDialog(getActivity(), this, hour, minute,true);
         }
 
@@ -152,6 +197,9 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
 
             if(displayTime != null && !displayPill.getText().equals("")){
                 confirmBtn.setEnabled(true);
+                selectTime.setVisibility(View.INVISIBLE);
+                confirmBtn.setVisibility(View.VISIBLE);
+
             }
         }
     }
@@ -161,7 +209,12 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
      */
     @Override
     protected void onStart() {
-        Picasso.get().load(picture).into(this.photo);
+        StorageReference imageReference = images.child(name + ".jpg");
+        this.number1 = "9248454";
+        imageReference.getDownloadUrl().addOnSuccessListener(s -> {
+            Picasso.get().load(s).into(photo);
+        });
+
         updateList();
         super.onStart();
     }
@@ -183,6 +236,8 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
         Picasso.get().load(picture).into(this.photo);
         this.adapter.notifyDataSetChanged();
     }
+
+
 
     private void updateTime(Calendar calendar){
         String time = getString(R.string.alarmSet);

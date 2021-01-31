@@ -37,15 +37,17 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/white"
+        android:layout_height="100dp"
+        android:background="#17A9BC"
         android:textColorHint="#000000"
         android:textColor="@color/black">
 
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:id="@+id/spinner_id">
+            android:id="@+id/spinner_id"
+            android:background="@color/white"
+            android:layout_marginTop="10dp">
 
         </Spinner>
 

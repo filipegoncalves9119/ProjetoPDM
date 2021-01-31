@@ -5,14 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.ChangeOrDeleteActivity"
+    android:background="#17A9BC"
     android:orientation="vertical"
     android:gravity="center">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="100dp"
+        android:textColor="@color/white"
         android:text="@string/edit_or_delete"
-        android:textSize="25dp"
+        android:textSize="36dp"
         android:textAlignment="center"/>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,8 +24,10 @@
         <EditText
             android:id="@+id/pill_id"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:textSize="25dp"/>
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:textSize="25dp"
+            android:textColor="@color/black"/>
 
 
     </RelativeLayout>
@@ -31,28 +35,30 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100dp">
+
         <EditText
             android:id="@+id/timer_id"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:textSize="25dp"/>
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:textSize="25dp"
+            android:textColor="@color/black"/>
 
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/update_children_id"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:text="@string/update" />
 
     <Button
         android:id="@+id/delete_children_id"
         android:layout_width="150dp"
         android:layout_height="50dp"
 
-        android:text="@string/delete">
+        android:text="@string/delete"/>
 
-    </Button>
 
-    <Button
-        android:id="@+id/update_children_id"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:text="@string/update"
-        />
 
 </LinearLayout>

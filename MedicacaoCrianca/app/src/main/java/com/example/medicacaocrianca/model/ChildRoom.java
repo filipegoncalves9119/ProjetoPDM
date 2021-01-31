@@ -4,12 +4,12 @@ public class ChildRoom {
 
     private int roomNumber;
     private String name;
-    private String uri;
+    private String phoneNum;
 
-    public ChildRoom(Integer roomNumber, String name, String uri){
+    public ChildRoom(Integer roomNumber, String name, String phoneNum){
         this.roomNumber = roomNumber;
         this.name = name;
-        this.uri = uri;
+        this.phoneNum = phoneNum;
     }
 
     public ChildRoom(){
@@ -32,11 +32,11 @@ public class ChildRoom {
         this.name = name;
     }
 
-    public String getUri() {
-        return uri;
+    public String getPhoneNum() {
+        return phoneNum;
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
     }
 }

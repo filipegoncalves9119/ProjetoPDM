@@ -65,7 +65,7 @@ public class AddTeacherActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 registerToAuth();
-                finish();
+               // finish();
             }
         });
     }
@@ -83,7 +83,12 @@ public class AddTeacherActivity extends AppCompatActivity {
         String name = fullName.getText().toString();
 
         // check for null fields
-        if(TextUtils.isEmpty(mail)){
+        if(TextUtils.isEmpty(name)){
+            this.fullName.setError(getString(R.string.enterName));
+            return;
+        }
+
+        else if(TextUtils.isEmpty(mail)){
             this.email.setError(getString(R.string.enter_email));
             return;
         }
@@ -91,10 +96,7 @@ public class AddTeacherActivity extends AppCompatActivity {
             this.password.setError(getString(R.string.enter_password));
             return;
         }
-        else if(TextUtils.isEmpty(name)){
-            this.fullName.setError(getString(R.string.enterName));
-            return;
-        }
+
         else if(!pass.equals(passConfirm)){
             this.password.setError(getString(R.string.passMatch));
             this.passwordConfirm.setError(getString(R.string.passMatch));
@@ -117,10 +119,7 @@ public class AddTeacherActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     register();
-                    Toast.makeText(AddTeacherActivity.this, getString(R.string.createdSucessTeacher) , Toast.LENGTH_SHORT).show();
-                    //Intent confirm = new Intent(AddTeacherActivity.this, AdminHomeActivity.class);
-                    //startActivity(confirm);
-                    finish();
+
                 }
             }
         });
@@ -141,7 +140,9 @@ public class AddTeacherActivity extends AppCompatActivity {
         db.collection("teacher").add(teacher).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
+                Toast.makeText(AddTeacherActivity.this, getString(R.string.createdSucessTeacher) , Toast.LENGTH_SHORT).show();
 
+                finish();
             }
         })
         .addOnFailureListener(new OnFailureListener() {

@@ -3,11 +3,8 @@ package com.example.medicacaocrianca.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.UiAutomation;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,21 +16,14 @@ import android.widget.Toast;
 import com.example.medicacaocrianca.R;
 import com.example.medicacaocrianca.model.ChildRoom;
 
-import com.example.medicacaocrianca.model.Children;
-import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -46,7 +36,7 @@ public class AddChildRoomActivity extends AppCompatActivity implements AdapterVi
     private Spinner spinnerRooms;
     private Button confirmBtn;
     private Button backBtn;
-    private String uri;
+    private String phoneNum;
     FirebaseFirestore db;
     DatabaseReference referenceForUri;
 
@@ -149,11 +139,11 @@ public class AddChildRoomActivity extends AppCompatActivity implements AdapterVi
         db.collection("children").whereEqualTo("fullName", name).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
-                    this.uri = queryDocumentSnapshot.getString("uri");
+                    this.phoneNum = queryDocumentSnapshot.getString("phoneNumber");
                 }
             }
 
-            ChildRoom childRoom = new ChildRoom(roomNumb, name, uri);
+            ChildRoom childRoom = new ChildRoom(roomNumb, name, phoneNum);
             db.collection("childroom").add(childRoom).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentReference> task) {

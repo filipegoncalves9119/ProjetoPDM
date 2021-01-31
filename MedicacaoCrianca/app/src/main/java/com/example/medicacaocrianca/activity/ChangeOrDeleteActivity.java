@@ -24,7 +24,8 @@ public class ChangeOrDeleteActivity extends AppCompatActivity implements Seriali
     private Button update;
     private Button delete;
     private String picture;
-    private final int REQUEST_CODE_BACK_OPEN_CHILD_SELECTED = 1000;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

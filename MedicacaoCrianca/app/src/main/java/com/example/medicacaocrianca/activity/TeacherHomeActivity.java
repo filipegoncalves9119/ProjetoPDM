@@ -121,12 +121,11 @@ public class TeacherHomeActivity extends AppCompatActivity {
                 for(DocumentSnapshot documentSnapshot : task12.getResult()){
                     Children children = new Children();
                     children.setFullName(documentSnapshot.get("name").toString());
-                    children.setUri(documentSnapshot.get("uri").toString());
+                    children.setPhoneNumber(documentSnapshot.get("phoneNum").toString());
                     list.add(children);
                 }
                 adapter.notifyDataSetChanged();
             });
-
         });
 
     }
