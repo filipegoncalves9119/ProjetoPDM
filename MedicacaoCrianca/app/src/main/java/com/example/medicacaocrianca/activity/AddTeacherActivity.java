@@ -1,6 +1,7 @@
 package com.example.medicacaocrianca.activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -8,12 +9,15 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.medicacaocrianca.R;
@@ -29,6 +33,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 public class AddTeacherActivity extends AppCompatActivity {
 
     private Button backBtn;
@@ -37,10 +45,13 @@ public class AddTeacherActivity extends AppCompatActivity {
     private EditText email;
     private EditText password;
     private EditText passwordConfirm;
+    private TextView coordinates;
     private FirebaseAuth firebase;
     DatabaseReference reference;
     private FirebaseFirestore db;
     private Button getLocation;
+    private String lat;
+    private String lng;
     private final int REQUEST_MAPS_CODE = 1101;
 
     @Override
@@ -55,39 +66,30 @@ public class AddTeacherActivity extends AppCompatActivity {
         this.password = findViewById(R.id.teacher_password_text_id);
         this.passwordConfirm = findViewById(R.id.teacher_password_confirm_text_id);
         this.getLocation = findViewById(R.id.btn_get_location_id);
+        this.coordinates = findViewById(R.id.coordinates_id);
         this.firebase = FirebaseAuth.getInstance();
         this.reference = FirebaseDatabase.getInstance().getReference().child("Teacher");
         this.db = FirebaseFirestore.getInstance();
 
-        //Camera request
+        //maps request
         if (ContextCompat.checkSelfPermission(AddTeacherActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(AddTeacherActivity.this, new String[]{
                     Manifest.permission.ACCESS_FINE_LOCATION
             }, REQUEST_MAPS_CODE);
         }
 
-        this.backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               // Intent backHome = new Intent(AddTeacherActivity.this, AdminHomeActivity.class);
-               // startActivity(backHome);
-                finish();
-            }
-        });
+        this.backBtn.setOnClickListener(v -> finish());
 
-        this.confirmBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                registerToAuth();
-               // finish();
-            }
+        this.confirmBtn.setOnClickListener(v -> {
+            registerToAuth();
+            // finish();
         });
 
         getLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AddTeacherActivity.this, MapsActivity.class);
-                startActivity(intent);
+
+                startActivityForResult(new Intent(AddTeacherActivity.this, MapsActivity.class), REQUEST_MAPS_CODE);
 
             }
         });
@@ -99,33 +101,27 @@ public class AddTeacherActivity extends AppCompatActivity {
      * checks for null fields and set error message if find any
      * if successfully regist a user calls for register method
      */
-    private void registerToAuth(){
+    private void registerToAuth() {
         String mail = email.getText().toString();
         String pass = password.getText().toString();
         String passConfirm = passwordConfirm.getText().toString();
         String name = fullName.getText().toString();
 
         // check for null fields
-        if(TextUtils.isEmpty(name)){
+        if (TextUtils.isEmpty(name)) {
             this.fullName.setError(getString(R.string.enterName));
             return;
-        }
-
-        else if(TextUtils.isEmpty(mail)){
+        } else if (TextUtils.isEmpty(mail)) {
             this.email.setError(getString(R.string.enter_email));
             return;
-        }
-        else if(TextUtils.isEmpty(pass) || TextUtils.isEmpty(passConfirm)){
+        } else if (TextUtils.isEmpty(pass) || TextUtils.isEmpty(passConfirm)) {
             this.password.setError(getString(R.string.enter_password));
             return;
-        }
-
-        else if(!pass.equals(passConfirm)){
+        } else if (!pass.equals(passConfirm)) {
             this.password.setError(getString(R.string.passMatch));
             this.passwordConfirm.setError(getString(R.string.passMatch));
             return;
-        }
-        else if(pass.length() < 6){
+        } else if (pass.length() < 6) {
             this.password.setError(getString(R.string.passLength));
         }
 
@@ -137,10 +133,10 @@ public class AddTeacherActivity extends AppCompatActivity {
         */
 
         //creates user in authentication database
-        firebase.createUserWithEmailAndPassword(mail,passConfirm).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        firebase.createUserWithEmailAndPassword(mail, passConfirm).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     register();
 
                 }
@@ -148,7 +144,7 @@ public class AddTeacherActivity extends AppCompatActivity {
         });
     }
 
-    private boolean isValidEmail(CharSequence charSequence){
+    private boolean isValidEmail(CharSequence charSequence) {
         return (!TextUtils.isEmpty(charSequence) && Patterns.EMAIL_ADDRESS.matcher(charSequence).matches());
 
     }
@@ -156,26 +152,36 @@ public class AddTeacherActivity extends AppCompatActivity {
     /**
      * Method to add a teacher to Cloud firebase
      */
-    private void register(){
+    private void register() {
 
         Teacher teacher = new Teacher(this.fullName.getText().toString(), this.email.getText().toString());
 
-        db.collection("teacher").add(teacher).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Toast.makeText(AddTeacherActivity.this, getString(R.string.createdSucessTeacher) , Toast.LENGTH_SHORT).show();
+        db.collection("teacher").add(teacher).addOnSuccessListener(documentReference -> {
 
-                finish();
-            }
-        })
-        .addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
+            Toast.makeText(AddTeacherActivity.this, getString(R.string.createdSucessTeacher), Toast.LENGTH_SHORT).show();
+            finish();
+        }).addOnFailureListener(e -> {
 
-            }
         });
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_MAPS_CODE && resultCode == RESULT_OK) {
+            lat = data.getStringExtra("lat");
+            lng = data.getStringExtra("long");
 
+            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+            try {
+                List<Address> addresses = geocoder.getFromLocation(Double.parseDouble(lat), Double.parseDouble(lng), 1);
+                Address fullAddress = addresses.get(0);
+                String street = fullAddress.getAddressLine(0);
+                coordinates.setText(street);
 
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

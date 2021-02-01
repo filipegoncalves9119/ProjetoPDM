@@ -7,11 +7,15 @@ import androidx.fragment.app.FragmentActivity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.medicacaocrianca.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -20,10 +24,15 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+
+import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private Button confirm;
     private LocationListener locationListener;
     private LocationManager locationManager;
 
@@ -31,6 +40,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        confirm = findViewById(R.id.confirm_map_id);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -60,15 +70,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 LatLng currentLocation = new LatLng(userLat, userLong);
                 mMap.addMarker(new MarkerOptions().position(currentLocation).title("You are here!"));
+                mMap.setMinZoomPreference(15.0f);
+                mMap.setMaxZoomPreference(28.0f);
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+
+                confirm.setOnClickListener(v -> {
+                    Intent intent = new Intent(MapsActivity.this, AddTeacherActivity.class);
+                    intent.putExtra("lat", userLat+"");
+                    intent.putExtra("long", userLong+"");
+                    setResult(RESULT_OK, intent);
+                    finish();
+                });
             }
+
+
         };
-        /*
-         * @param provider     a provider listed by {@link #getAllProviders()}
-         * @param minTimeMs    minimum time interval between location updates in milliseconds
-         * @param minDistanceM minimum distance between location updates in meters
-         * @param listener     the listener to receive location updates
-         */
+
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -79,7 +97,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        this.locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        this.locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 15, locationListener);
 
     }
+
+
 }
