@@ -7,6 +7,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:paddingHorizontal="30dp"
+    android:background="#17A9BC"
     tools:context=".activity.AdminHomeActivity">
 
     <TextView
@@ -14,6 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="30dp"
+        android:textColor="@color/white"
         android:paddingBottom="40dp"
         android:text="@string/add_children"
         android:textSize="36dp" />
@@ -25,6 +27,8 @@
         <EditText
             android:id="@+id/full_name_text_id"
             android:layout_width="match_parent"
+            android:background="@drawable/rectangle_field"
+            android:gravity="center"
             android:layout_height="60dp"
             android:hint="@string/fullName"
             android:inputType="text"
@@ -38,6 +42,8 @@
         <EditText
             android:id="@+id/address_text_id"
             android:layout_width="match_parent"
+            android:background="@drawable/rectangle_field"
+            android:gravity="center"
             android:layout_height="60dp"
             android:hint="@string/address"
             android:inputType="text"
@@ -51,6 +57,8 @@
         <EditText
             android:id="@+id/bithdate_text_id"
             android:layout_width="match_parent"
+            android:gravity="center"
+            android:background="@drawable/rectangle_field"
             android:layout_height="60dp"
             android:hint="@string/birthDate"
             android:inputType="text"
@@ -64,6 +72,8 @@
         <EditText
             android:id="@+id/parent_text_id"
             android:layout_width="match_parent"
+            android:gravity="center"
+            android:background="@drawable/rectangle_field"
             android:layout_height="60dp"
             android:hint="@string/parent_name"
             android:inputType="text"
@@ -77,6 +87,8 @@
         <EditText
             android:id="@+id/number_text_id"
             android:layout_width="match_parent"
+            android:gravity="center"
+            android:background="@drawable/rectangle_field"
             android:layout_height="60dp"
             android:hint="@string/phoneNumber"
             android:inputType="number"
@@ -128,7 +140,7 @@
            android:layout_height="wrap_content"
            android:layout_alignParentStart="true"
            android:layout_marginTop="40dp"
-           android:layout_marginStart="30dp"
+
            android:text="@string/back"/>
 
        <Button
@@ -136,7 +148,7 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_alignParentEnd="true"
-           android:layout_marginEnd="30dp"
+
            android:layout_marginTop="40dp"
            android:text="@string/confirm"
            app:srcCompat="@android:drawable/ic_menu_save" />

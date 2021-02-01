@@ -35,7 +35,7 @@
     <string name="addRoomSuccess">Sala adicioando com sucesso!</string>
     <string name="insert_pill_name">Insira o nome do medicamento</string>
     <string name="select_hours">Selecione as horas</string>
-    <string name="select_from_gallery">Selecionar da galaria</string>
+    <string name="select_from_gallery">Galeria</string>
     <string name="select_a_room">Selecionar sala</string>
     <string name="enter_name">Digite o nome</string>
     <string name="enter_address">Digite a morada</string>

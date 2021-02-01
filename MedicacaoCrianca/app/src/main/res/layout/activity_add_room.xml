@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
+    android:paddingHorizontal="30dp"
     android:background="#17A9BC"
     tools:context=".activity.AdminHomeActivity">
 
@@ -26,10 +27,11 @@
             android:id="@+id/room_number_text_id"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="@color/white"
             android:textColor="@color/black"
             android:textColorHint="#000000"
+            android:gravity="center"
             android:hint="@string/room_number"
+            android:background="@drawable/rectangle_field"
             android:inputType="number"
             android:paddingBottom="5dp" />
 
@@ -38,15 +40,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="#17A9BC"
-        android:textColorHint="#000000"
-        android:textColor="@color/black">
+        android:textColorHint="#000000">
 
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:id="@+id/spinner_id"
-            android:background="@color/white"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:background="@drawable/rectangle_field"
             android:layout_marginTop="10dp">
 
         </Spinner>
@@ -63,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_marginTop="40dp"
-            android:layout_marginStart="30dp"
+
             android:text="@string/back"/>
 
         <Button
@@ -71,7 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="30dp"
+
             android:layout_marginTop="40dp"
             android:text="@string/confirm"
             app:srcCompat="@android:drawable/ic_menu_save" />

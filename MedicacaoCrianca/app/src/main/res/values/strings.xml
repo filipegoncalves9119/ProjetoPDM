@@ -35,7 +35,7 @@
     <string name="addRoomSuccess">Room added successfully!</string>
     <string name="insert_pill_name">Pill/Remedy name</string>
     <string name="select_hours">Select hours</string>
-    <string name="select_from_gallery">Select from gallery</string>
+    <string name="select_from_gallery">Gallery</string>
     <string name="select_a_room">Select a room</string>
     <string name="enter_name">Enter a name</string>
     <string name="enter_address">Enter an address</string>

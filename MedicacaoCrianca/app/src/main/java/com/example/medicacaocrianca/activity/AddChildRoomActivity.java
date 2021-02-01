@@ -83,6 +83,7 @@ public class AddChildRoomActivity extends AppCompatActivity implements AdapterVi
                 //Creates the adapter and set it's values to the list created previously
                 ArrayAdapter arrayAdapter = new ArrayAdapter(AddChildRoomActivity.this, android.R.layout.simple_spinner_item, list);
                 arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
                 spinnerRooms.setAdapter(arrayAdapter);
 
             }
@@ -97,8 +98,7 @@ public class AddChildRoomActivity extends AppCompatActivity implements AdapterVi
             @Override
             public void onClick(View v) {
                 registerChildRoom();
-                //Intent backHome = new Intent(AddChildRoomActivity.this, AdminHomeActivity.class);
-                //startActivity(backHome);
+
                 finish();
             }
         });
@@ -106,17 +106,17 @@ public class AddChildRoomActivity extends AppCompatActivity implements AdapterVi
         this.backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent backHome = new Intent(AddChildRoomActivity.this, AdminHomeActivity.class);
-                //startActivity(backHome);
+
                 finish();
             }
         });
 
-    }
 
+    }
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        ((TextView) view).setTextColor(Color.BLACK);
+
+        ((TextView) view).setTextColor(getResources().getColor(R.color.black));
 
     }
 
@@ -124,7 +124,6 @@ public class AddChildRoomActivity extends AppCompatActivity implements AdapterVi
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
-
 
     /**
      * Method to regist a child
@@ -156,9 +155,9 @@ public class AddChildRoomActivity extends AppCompatActivity implements AdapterVi
                 }
             });
         });
-
-
     }
+
+
 
 }
 

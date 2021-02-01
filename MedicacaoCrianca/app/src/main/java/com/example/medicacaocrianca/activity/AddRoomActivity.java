@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -92,8 +93,11 @@ public class AddRoomActivity extends AppCompatActivity implements AdapterView.On
         this.saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                register();
-                finish();
+                if(TextUtils.isEmpty(roomNumber.getText().toString())){
+                    roomNumber.setError("Insert a room number");
+                }else{
+                    register();
+                }
             }
         });
 
@@ -103,34 +107,12 @@ public class AddRoomActivity extends AppCompatActivity implements AdapterView.On
         this.backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // Intent backHomeBtn = new Intent(AddRoomActivity.this, AdminHomeActivity.class);
-                //startActivity(backHomeBtn);
+
                 finish();
             }
         });
 
-    }
 
-    /**
-     * method to Regist an object of Room into database
-     * gather all information from edit text and spinner selection and pushes into database
-     */
-    private void register() {
-        List<Children> list = new ArrayList<>();
-        int number = Integer.parseInt(this.roomNumber.getText().toString());
-        String name = spin.getSelectedItem().toString();
-        Room room = new Room(name, list, number);
-        db.collection("room").add(room).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Toast.makeText(AddRoomActivity.this, R.string.addRoomSuccess, Toast.LENGTH_LONG).show();
-            }
-        })  .addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-            }
-        });
     }
 
     /**
@@ -142,8 +124,7 @@ public class AddRoomActivity extends AppCompatActivity implements AdapterView.On
      */
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        ((TextView) view).setTextColor(Color.BLACK);
-
+        ((TextView) view).setTextColor(getResources().getColor(R.color.black));
     }
 
     /**
@@ -154,4 +135,29 @@ public class AddRoomActivity extends AppCompatActivity implements AdapterView.On
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
+    /**
+     * method to Register an object of Room into database
+     * gather all information from edit text and spinner selection and pushes into database
+     */
+    private void register() {
+        List<Children> list = new ArrayList<>();
+        int number = Integer.parseInt(this.roomNumber.getText().toString());
+        String name = spin.getSelectedItem().toString();
+        Room room = new Room(name, list, number);
+        db.collection("room").add(room).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Toast.makeText(AddRoomActivity.this, R.string.addRoomSuccess, Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        })  .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+    }
+
+
 }

@@ -244,6 +244,7 @@ public class AddChildrenActivity extends AppCompatActivity {
                     storageReference.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                         @Override
                         public void onComplete(@NonNull Task<Uri> task) {
+
                             //on success image sent to data base storage creates new children with given information
                             addChildren(fullName.getText().toString(), address.getText().toString(), birthdate.getText().toString(), phoneNumber.getText().toString(), parent.getText().toString(), task.toString());
                             Toast.makeText(AddChildrenActivity.this, getString(R.string.children_add_sucess), Toast.LENGTH_SHORT).show();

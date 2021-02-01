@@ -28,7 +28,7 @@
             android:layout_height="50dp"
             android:textAlignment="center"
             android:gravity="center"
-            android:background="@color/white"
+            android:background="@drawable/rectangle_field"
             android:text="@string/pickChildren"
             android:textColor="@color/black" />
 
@@ -40,7 +40,7 @@
             android:gravity="center"
             android:layout_marginTop="60dp"
             android:paddingEnd="10dp"
-            android:background="@color/white" />
+            android:background="@drawable/rectangle_field"/>
 
 
     </RelativeLayout>
@@ -56,7 +56,7 @@
             android:layout_height="50dp"
             android:textAlignment="center"
             android:gravity="center"
-            android:background="@color/white"
+            android:background="@drawable/rectangle_field"
             android:text="@string/select_a_room"
             android:textColor="@color/black" />
 
@@ -66,9 +66,9 @@
             android:layout_height="40dp"
             android:textAlignment="center"
             android:gravity="center"
+            android:background="@drawable/rectangle_field"
             android:layout_marginTop="60dp"
-            android:paddingEnd="10dp"
-            android:background="@color/white"  />
+            android:paddingEnd="10dp" />
 
     </RelativeLayout>
 
@@ -82,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="30dp"
+
             android:layout_marginTop="40dp"
             android:text="@string/back" />
 
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="40dp"
-            android:layout_marginEnd="30dp"
+
             android:text="@string/confirm" />
 
     </RelativeLayout>
