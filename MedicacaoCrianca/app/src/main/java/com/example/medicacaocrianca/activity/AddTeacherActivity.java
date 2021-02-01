@@ -2,8 +2,12 @@ package com.example.medicacaocrianca.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -34,8 +38,10 @@ public class AddTeacherActivity extends AppCompatActivity {
     private EditText password;
     private EditText passwordConfirm;
     private FirebaseAuth firebase;
-    private DatabaseReference reference;
+    DatabaseReference reference;
     private FirebaseFirestore db;
+    private Button getLocation;
+    private final int REQUEST_MAPS_CODE = 1101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +54,17 @@ public class AddTeacherActivity extends AppCompatActivity {
         this.email = findViewById(R.id.teacher_email_text_id);
         this.password = findViewById(R.id.teacher_password_text_id);
         this.passwordConfirm = findViewById(R.id.teacher_password_confirm_text_id);
+        this.getLocation = findViewById(R.id.btn_get_location_id);
         this.firebase = FirebaseAuth.getInstance();
         this.reference = FirebaseDatabase.getInstance().getReference().child("Teacher");
         this.db = FirebaseFirestore.getInstance();
+
+        //Camera request
+        if (ContextCompat.checkSelfPermission(AddTeacherActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(AddTeacherActivity.this, new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION
+            }, REQUEST_MAPS_CODE);
+        }
 
         this.backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +80,15 @@ public class AddTeacherActivity extends AppCompatActivity {
             public void onClick(View v) {
                 registerToAuth();
                // finish();
+            }
+        });
+
+        getLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddTeacherActivity.this, MapsActivity.class);
+                startActivity(intent);
+
             }
         });
     }
