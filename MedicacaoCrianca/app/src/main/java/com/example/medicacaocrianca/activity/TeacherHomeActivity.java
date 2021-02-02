@@ -55,12 +55,14 @@ public class TeacherHomeActivity extends AppCompatActivity {
         this.user = FirebaseAuth.getInstance().getCurrentUser();
         this.recyclerView = findViewById(R.id.recycler_view);
 
-        //method to get the user information and display on the view
+
         setCurrentUserInfo();
 
     }
 
-
+    /**
+     * onStart load children whenever the activity starts
+     */
     @Override
     protected void onStart() {
 
@@ -78,7 +80,7 @@ public class TeacherHomeActivity extends AppCompatActivity {
     }
 
     /**
-     * Method to initialize the adapter passing the context and the list of childrens
+     * Method to initialize the adapter passing the context and the list of children
      */
     public void loadChildren() {
 
@@ -95,8 +97,7 @@ public class TeacherHomeActivity extends AppCompatActivity {
      * Method to query the database on Teacher collection and search for the email used on the authentication
      * Continue with task to get the teacher current room
      * on Complete previous task queries for the children that belong to the room
-     * fills list to be shown in the recycler view
-     * gets the children name according and sets it to the textView
+     * fills list to be shown in the recycler view with children
      */
     private void setCurrentUserInfo() {
 

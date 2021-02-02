@@ -10,12 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
 import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -53,6 +56,7 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
     private List<Children> list;
     private String name;
     private String picture;
+
     String number1;
 
     StorageReference storageReference = FirebaseStorage.getInstance().getReference();
@@ -78,14 +82,15 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
         Intent extras = getIntent();
         this.name = extras.getStringExtra("name");
         this.picture = extras.getStringExtra("picture");
-
         this.displayName.setText(name);
-       // Log.d("imagem", picture);
+
+
         //Permission to use the phone calls
         if (ContextCompat.checkSelfPermission(OpenChildSelectedActivity.this, Manifest.permission.CALL_PHONE) !=
                 PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(OpenChildSelectedActivity.this, new String[]{
                     Manifest.permission.CALL_PHONE}, REQUEST_PHONE_CALL_CODE);
+        }
 
             //Listener to call for phone call
             makeCall.setOnClickListener(v -> {
@@ -102,7 +107,7 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
             });
 
 
-        }
+
         backActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,20 +131,87 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
 
        //Listener for the confirmation button, adds a new children to the Room database.
        confirmBtn.setOnClickListener(v -> {
+           MyAsyncTask task = new MyAsyncTask();
+
            String pill = displayPill.getText().toString();
            String timer = displayTime.getText().toString();
-
            Children children = new Children();
            children.setId(0);
-           children.setFullName(this.name);
+           children.setFullName(name);
            children.setTime(timer);
            children.setPills(pill);
-
-           ChildrenDatabase.getInstance(getApplicationContext()).childrenDao().inset(children);
+           task.execute(children);
            finish();
        });
 
     }
+
+    /**
+     * Method to set list with the children
+     * set up adapter and recycler view
+     */
+    private void updateList(){
+        this.list = ChildrenDatabase.getInstance(getApplicationContext()).childrenDao().get(this.name);
+
+        this.adapter = new SelectedChildAdapter(this.getApplicationContext(), this.list);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        this.recyclerView.setLayoutManager(layoutManager);
+        this.recyclerView.setHasFixedSize(true);
+        this.recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayout.VERTICAL));
+        this.recyclerView.setAdapter(this.adapter);
+        //  Picasso.get().load(picture).into(this.photo);
+        this.adapter.notifyDataSetChanged();
+    }
+
+    /**
+     * onStart method
+     * calls for update list method
+     * loads the children picture
+     */
+    @Override
+    protected void onStart() {
+        StorageReference imageReference = images.child(this.name + ".jpg");
+
+        //gets the direct link of the image
+        imageReference.getDownloadUrl().addOnSuccessListener(s -> {
+            Picasso.get().load(s).into(photo);
+        });
+
+        updateList();
+        super.onStart();
+    }
+
+
+    class MyAsyncTask extends AsyncTask<Children ,Void ,Void>{
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Children... children) {
+
+            ChildrenDatabase.getInstance(getApplicationContext()).childrenDao().inset(children[0]);
+
+            return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Toast.makeText(OpenChildSelectedActivity.this, "Added successfully!", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+    }
+
+
+
 
 
     /**
@@ -161,7 +233,7 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current time as the default values for the picker
+
             final Calendar c = Calendar.getInstance();
             int hour = c.get(Calendar.HOUR_OF_DAY);
             int minute = c.get(Calendar.MINUTE);
@@ -181,6 +253,8 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             String hour ="";
             String min ="";
+
+            //adds a 0 to the time to prevent hours like 2:2 (instead ex.: 02:02 )
             if(hourOfDay < 10 ){
                 hour =  0+""+hourOfDay;
             }else{
@@ -193,7 +267,9 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
                 min = minute+"";
             }
 
-            displayTime.setText(hour +":"+min);
+            String time = hour +":"+min;
+
+            displayTime.setText(time);
 
             if(displayTime != null && !displayPill.getText().equals("")){
                 confirmBtn.setEnabled(true);
@@ -204,52 +280,13 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * calls for update list method
-     */
-    @Override
-    protected void onStart() {
-        StorageReference imageReference = images.child(name + ".jpg");
-        this.number1 = "9248454";
-        imageReference.getDownloadUrl().addOnSuccessListener(s -> {
-            Picasso.get().load(s).into(photo);
-        });
-
-        updateList();
-        super.onStart();
-    }
-
-
-    /**
-     * Method to set list with the children
-     * set up adapter and recycler view
-     */
-    private void updateList(){
-        this.list = ChildrenDatabase.getInstance(getApplicationContext()).childrenDao().get(this.name);
-
-        this.adapter = new SelectedChildAdapter(this.getApplicationContext(), this.list);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        this.recyclerView.setLayoutManager(layoutManager);
-        this.recyclerView.setHasFixedSize(true);
-        this.recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayout.VERTICAL));
-        this.recyclerView.setAdapter(this.adapter);
-        Picasso.get().load(picture).into(this.photo);
-        this.adapter.notifyDataSetChanged();
-    }
 
 
 
-    private void updateTime(Calendar calendar){
-        String time = getString(R.string.alarmSet);
-        time += DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar);
-    }
 
-    private void startAlarm(Calendar calendar){
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-       // Intent intent = new Intent(this, AlertReceiver.class);
-        //PendingIntent pendingIntent = PendingIntent.getBroadcast(this,1,intent,0);
-        //alarmManager.setExact(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
-    }
+
+
+
 
 
 

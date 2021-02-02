@@ -4,11 +4,12 @@ public class Teacher {
 
     private String name;
     private String email;
-    private String password;
+    private String address;
 
-    public Teacher(String name, String email) {
+    public Teacher(String name, String email,String address) {
         this.name = name;
         this.email = email;
+        this.address = address;
 
     }
 
@@ -32,5 +33,11 @@ public class Teacher {
         this.email = email;
     }
 
+    public String getAddress() {
+        return address;
+    }
 
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }

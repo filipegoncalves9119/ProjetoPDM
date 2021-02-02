@@ -26,7 +26,6 @@ public class SelectedChildAdapter extends RecyclerView.Adapter<SelectedChildAdap
         this.context = context;
         this.list = list;
 
-
     }
 
     @NonNull
@@ -46,14 +45,14 @@ public class SelectedChildAdapter extends RecyclerView.Adapter<SelectedChildAdap
         holder.time.setText(time);
 
 
-        // Listener to delete pressed item from recycler view
+        // Listener
         holder.itemView.setOnClickListener(v -> {
 
             Intent intent = new Intent(context, ChangeOrDeleteActivity.class);
             intent.putExtra("pill", pills);
             intent.putExtra("time", time);
+
             intent.putExtra("children", children);
-            intent.putExtra("name",children.getFullName());
 
 
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

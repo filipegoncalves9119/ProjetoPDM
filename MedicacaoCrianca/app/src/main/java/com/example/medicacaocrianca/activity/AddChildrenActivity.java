@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -23,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.medicacaocrianca.R;
+import com.example.medicacaocrianca.database.ChildrenDatabase;
 import com.example.medicacaocrianca.model.Children;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -207,6 +209,7 @@ public class AddChildrenActivity extends AppCompatActivity {
         StorageReference databaseReference = storage.getReference();
         StorageReference storageReference = databaseReference.child("images/" + this.fullName.getText().toString() + ".jpg");
 
+        //checking for empty inputs
         if (TextUtils.isEmpty(fullName.getText().toString())) {
             fullName.setError(getString(R.string.enter_name));
         } else if (TextUtils.isEmpty(address.getText().toString())) {
@@ -248,8 +251,6 @@ public class AddChildrenActivity extends AppCompatActivity {
                             //on success image sent to data base storage creates new children with given information
                             addChildren(fullName.getText().toString(), address.getText().toString(), birthdate.getText().toString(), phoneNumber.getText().toString(), parent.getText().toString(), task.toString());
                             Toast.makeText(AddChildrenActivity.this, getString(R.string.children_add_sucess), Toast.LENGTH_SHORT).show();
-                            //Intent backHome = new Intent(AddChildrenActivity.this, AdminHomeActivity.class);
-                            //startActivity(backHome);
                             finish();
                         }
                     });
@@ -257,4 +258,6 @@ public class AddChildrenActivity extends AppCompatActivity {
             });
         }
     }
+
+
 }

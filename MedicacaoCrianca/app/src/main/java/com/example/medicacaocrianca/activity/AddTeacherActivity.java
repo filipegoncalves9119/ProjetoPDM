@@ -23,14 +23,11 @@ import android.widget.Toast;
 import com.example.medicacaocrianca.R;
 import com.example.medicacaocrianca.model.Teacher;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
@@ -45,7 +42,7 @@ public class AddTeacherActivity extends AppCompatActivity {
     private EditText email;
     private EditText password;
     private EditText passwordConfirm;
-    private TextView coordinates;
+    private TextView address;
     private FirebaseAuth firebase;
     DatabaseReference reference;
     private FirebaseFirestore db;
@@ -66,7 +63,7 @@ public class AddTeacherActivity extends AppCompatActivity {
         this.password = findViewById(R.id.teacher_password_text_id);
         this.passwordConfirm = findViewById(R.id.teacher_password_confirm_text_id);
         this.getLocation = findViewById(R.id.btn_get_location_id);
-        this.coordinates = findViewById(R.id.coordinates_id);
+        this.address = findViewById(R.id.coordinates_id);
         this.firebase = FirebaseAuth.getInstance();
         this.reference = FirebaseDatabase.getInstance().getReference().child("Teacher");
         this.db = FirebaseFirestore.getInstance();
@@ -80,10 +77,18 @@ public class AddTeacherActivity extends AppCompatActivity {
 
         this.backBtn.setOnClickListener(v -> finish());
 
+        /**
+         * Listener for confirm button to call for registerToAuth method
+         */
         this.confirmBtn.setOnClickListener(v -> {
             registerToAuth();
-            // finish();
+
         });
+
+        /**
+         * Listener for get location
+         * starts maps activity
+         */
 
         getLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,13 +104,14 @@ public class AddTeacherActivity extends AppCompatActivity {
     /**
      * Method to register a user to authentication database
      * checks for null fields and set error message if find any
-     * if successfully regist a user calls for register method
+     * if successfully register a user calls for register method
      */
     private void registerToAuth() {
         String mail = email.getText().toString();
         String pass = password.getText().toString();
         String passConfirm = passwordConfirm.getText().toString();
         String name = fullName.getText().toString();
+        String address = this.address.getText().toString();
 
         // check for null fields
         if (TextUtils.isEmpty(name)) {
@@ -123,14 +129,12 @@ public class AddTeacherActivity extends AppCompatActivity {
             return;
         } else if (pass.length() < 6) {
             this.password.setError(getString(R.string.passLength));
-        }
 
-        /*
-        else if(isValidEmail(mail)){
-            this.email.setError("Invalid e-mail");
+        } else if (TextUtils.isEmpty(address)) {
+            this.address.setError("Please pick an address");
             return;
         }
-        */
+
 
         //creates user in authentication database
         firebase.createUserWithEmailAndPassword(mail, passConfirm).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -151,10 +155,11 @@ public class AddTeacherActivity extends AppCompatActivity {
 
     /**
      * Method to add a teacher to Cloud firebase
+     * creates an object of Teacher with given information
      */
     private void register() {
 
-        Teacher teacher = new Teacher(this.fullName.getText().toString(), this.email.getText().toString());
+        Teacher teacher = new Teacher(this.fullName.getText().toString(), this.email.getText().toString(), this.address.getText().toString());
 
         db.collection("teacher").add(teacher).addOnSuccessListener(documentReference -> {
 
@@ -165,19 +170,28 @@ public class AddTeacherActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * OnActivityResult method
+     * gets the data from the user location coordinates and converts it to an address
+     * sets the text view address
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_MAPS_CODE && resultCode == RESULT_OK) {
-            lat = data.getStringExtra("lat");
-            lng = data.getStringExtra("long");
+            this.lat = data.getStringExtra("lat");
+            this.lng = data.getStringExtra("long");
 
             Geocoder geocoder = new Geocoder(this, Locale.getDefault());
             try {
-                List<Address> addresses = geocoder.getFromLocation(Double.parseDouble(lat), Double.parseDouble(lng), 1);
+                List<Address> addresses = geocoder.getFromLocation(Double.parseDouble(this.lat), Double.parseDouble(this.lng), 1);
                 Address fullAddress = addresses.get(0);
                 String street = fullAddress.getAddressLine(0);
-                coordinates.setText(street);
+                this.address.setText(street);
 
             } catch (IOException e) {
                 e.printStackTrace();

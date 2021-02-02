@@ -39,12 +39,18 @@ public class ChildAdapter extends RecyclerView.Adapter<ChildAdapter.MyViewHolder
     StorageReference images = storageReference.child("images");
     String nameToSave;
 
+    /**
+     * Class constructor
+     * @param context
+     * @param list
+     */
     public ChildAdapter(Context context, List<Children> list) {
 
         this.list = list;
         this.context = context;
 
     }
+
 
     @NonNull
     @Override
@@ -59,31 +65,31 @@ public class ChildAdapter extends RecyclerView.Adapter<ChildAdapter.MyViewHolder
         return this.list.size();
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         Children children = list.get(position);
         holder.name.setText(children.getFullName());
-
+        //gets the image name
         StorageReference imageReference = images.child(children.getFullName() + ".jpg");
-
+        //gets direct link to an image and loads it to the image view
         imageReference.getDownloadUrl().addOnSuccessListener(s -> {
             nameToSave = s.toString();
             Picasso.get().load(s).into(holder.picture);
         });
 
-
+        //on view item click creates a new intent and passes variables and launches the activity
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, OpenChildSelectedActivity.class);
             intent.putExtra("name", children.getFullName());
-            //intent.putExtra("picture", nameToSave);
             intent.putExtra("phone", children.getPhoneNumber());
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
             holder.itemView.getContext().startActivity(intent);
 
         });
     }
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -95,8 +101,6 @@ public class ChildAdapter extends RecyclerView.Adapter<ChildAdapter.MyViewHolder
 
             name = itemView.findViewById(R.id.child_name_text_id);
             picture = itemView.findViewById(R.id.image_view_child_id);
-
-
 
         }
     }

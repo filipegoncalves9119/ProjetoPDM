@@ -23,7 +23,7 @@ public class ChangeOrDeleteActivity extends AppCompatActivity implements Seriali
     private EditText timer;
     private Button update;
     private Button delete;
-    private String picture;
+
 
 
 
@@ -41,7 +41,7 @@ public class ChangeOrDeleteActivity extends AppCompatActivity implements Seriali
         this.pill.setText(intent.getStringExtra("pill"));
         this.timer.setText(intent.getStringExtra("time"));
         Children children = (Children) intent.getSerializableExtra("children");
-        this.picture = intent.getStringExtra("image");
+
 
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
