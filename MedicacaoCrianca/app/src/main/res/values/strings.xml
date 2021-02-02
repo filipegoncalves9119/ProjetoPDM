@@ -47,6 +47,8 @@
     <string name="delete">Delete</string>
     <string name="update">Update</string>
     <string name="title_activity_maps">Map</string>
+    <string name="call_parent">Call parent</string>
+    <string name="add_a_pill_remedy">Add a pill/remedy</string>
 
 
 </resources>

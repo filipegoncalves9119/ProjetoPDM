@@ -46,6 +46,8 @@
     <string name="edit_or_delete">Editar ou apagar</string>
     <string name="delete">Apagar</string>
     <string name="update">Submeter</string>
+    <string name="call_parent">Telefonar aos pais</string>
+    <string name="add_a_pill_remedy">Adicionar medicamento</string>
 
 
 </resources>

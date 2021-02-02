@@ -39,7 +39,7 @@
 
             android:layout_marginRight="50dp"
             android:layout_marginTop="100dp"
-            android:text="Call parent"
+            android:text="@string/call_parent"
             android:gravity="center"
             android:textColor="@color/black"
             android:textSize="13dp" />
@@ -47,7 +47,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="Add a pill/remedy"
+            android:text="@string/add_a_pill_remedy"
             android:gravity="center"
             android:layout_alignParentBottom="true"
             android:textColor="@color/black"
@@ -143,7 +143,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="120dp"
-            android:text="Back"/>
+            android:text="@string/back"/>
 
 
 
