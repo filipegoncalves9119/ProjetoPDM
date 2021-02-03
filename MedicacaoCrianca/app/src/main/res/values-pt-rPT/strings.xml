@@ -48,6 +48,9 @@
     <string name="update">Submeter</string>
     <string name="call_parent">Telefonar aos pais</string>
     <string name="add_a_pill_remedy">Adicionar medicamento</string>
-
+    <string name="title_activity_maps">Mapa</string>
+    <string name="remove_pill">Medicamento removido com sucesso</string>
+    <string name="update_pill">Medicamento actualizado com sucesso</string>
+    <string name="local_db_add_child">Adicionado com sucesso</string>
 
 </resources>

@@ -201,7 +201,7 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            Toast.makeText(OpenChildSelectedActivity.this, "Added successfully!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(OpenChildSelectedActivity.this, getString(R.string.local_db_add_child), Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -209,8 +209,6 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
             super.onProgressUpdate(values);
         }
     }
-
-
 
 
 
@@ -279,15 +277,6 @@ public class OpenChildSelectedActivity extends AppCompatActivity {
             }
         }
     }
-
-
-
-
-
-
-
-
-
 
 
 }

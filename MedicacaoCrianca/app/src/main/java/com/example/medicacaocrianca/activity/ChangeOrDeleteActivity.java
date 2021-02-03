@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.medicacaocrianca.R;
 import com.example.medicacaocrianca.database.ChildrenDatabase;
@@ -47,6 +48,7 @@ public class ChangeOrDeleteActivity extends AppCompatActivity implements Seriali
             @Override
             public void onClick(View v) {
                 ChildrenDatabase.getInstance(getApplicationContext()).childrenDao().delete(children);
+                Toast.makeText(ChangeOrDeleteActivity.this, getString(R.string.remove_pill), Toast.LENGTH_SHORT).show();
                 finish();
 
             }
@@ -59,6 +61,7 @@ public class ChangeOrDeleteActivity extends AppCompatActivity implements Seriali
                 children1.setPills(pill.getText().toString());
                 children1.setTime(timer.getText().toString());
                 ChildrenDatabase.getInstance(getApplicationContext()).childrenDao().update(children1);
+                Toast.makeText(ChangeOrDeleteActivity.this, getString(R.string.update_pill), Toast.LENGTH_SHORT).show();
                 finish();
             }
         });

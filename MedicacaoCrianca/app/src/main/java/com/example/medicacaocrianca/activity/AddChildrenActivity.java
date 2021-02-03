@@ -188,12 +188,12 @@ public class AddChildrenActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CAMERA_CODE) {
+        if (requestCode == REQUEST_CAMERA_CODE && resultCode == RESULT_OK) {
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             this.picture.setImageBitmap(bitmap);
         }
 
-        if (requestCode == REQUEST_GALLERY_CODE) {
+        if (requestCode == REQUEST_GALLERY_CODE && resultCode == RESULT_OK) {
             this.picture.setImageURI(data.getData());
         }
     }
